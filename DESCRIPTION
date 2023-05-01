@@ -1,13 +1,13 @@
 Package: TMBtraining
 Title: TMB Training
-Date: 2021-07-04
+Date: 2023-05-01
 Version: 1.0
 Authors@R: person(c("Andrea", "M."), "Havron",
                  email = "andrea.havron@noaa.gov",  
                  role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-4080-448X"))
-URL: https://andrea-havron-noaa.github.io/TMBtraining
-BugReports: https://github.com/Andrea-Havron-NOAA/TMBtraining/issues
+URL: https://nsawtraining.github.io/TMBtraining
+BugReports: https://github.com/NSAWTraining/TMBtraining/issues
 Description: A collection of TMB resources and training materials
 Depends: R (>= 3.4.0)
 Suggests: 

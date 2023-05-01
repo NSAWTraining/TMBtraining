@@ -14,18 +14,18 @@ A collection of TMB training materials and resources
 ## Installation
 
 You can install materials from
-[GitHub](https://github.com/Andrea-Havron-NOAA/TMBtraining) with:
+[GitHub](https://NSAWTraining/TMBtraining) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("Andrea-Havron-NOAA/TMBtraining")
+devtools::install_github("NSAWTraining/TMBtraining")
 ```
 
 ## Respository Structure
 
 | Folder                                                                                                   | Description                                                       |
 |----------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
-| [Getting Started](https://nsawtraining.github.io/TMBtraining/doc/reference/000_Getting_Started_Contents) | Links with helpful tips and resources on getting started with TMB |
+| [Getting Started](https://nsawtraining.github.io/TMBtraining/docs/articles/000_Getting_Started_Contents) | Links with helpful tips and resources on getting started with TMB |
 
 <!-- Do not edit below. This adds the Disclaimer and NMFS footer. -->
 

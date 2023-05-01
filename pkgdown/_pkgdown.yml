@@ -4,7 +4,6 @@ navbar:
   structure:
     left:
     - home
-    - sourcecode
     - issue
     - articles
     - documents
@@ -15,15 +14,10 @@ navbar:
       icon: fas fa-home fa-lg
       href: index.html
 
-    sourcecode:
-      text: Source Code
-      icon: fab fa-github fa-lg
-      href: https://github.com/NSAWTrainingTMBtraining
-
     issue:
       text: Issues
       icon: fas fa-question-circle fa-lg
-      href: https://github.com/nmfs-fish-tools/pkgdownTemplate/issues/
+      href: https://nsawtraining.github.io/TMBtraining/issues/
 
     articles:
       text: Vignettes
@@ -35,9 +29,9 @@ navbar:
       icon: fas fa-book fa-lg
       menu:
       - text: TMB Developer Resources
-        href: Scoping.pdf
+        href: https://nsawtraining.github.io/TMBtraining/training-materials/00-tmb-resources/00_00_TMB_Developer_Resources.html
       - text: Getting Started with TMB
-        href: Article.html
+        href: https://nsawtraining.github.io/TMBtraining/training-materials/00-tmb-resources/00_01_Getting_Started.html
 
 authors:
   Andrea Havron:

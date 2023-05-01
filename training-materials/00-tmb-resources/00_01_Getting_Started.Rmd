@@ -7,7 +7,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## A collection of instructions and tips available from [TMB Developer Resources](https://nsawtraining.github.io/TMBtraining/doc/reference/00_00_TMB_Developer_Resources.html)
+## A collection of instructions and tips available from [TMB Developer Resources](https://nsawtraining.github.io/TMBtraining/training-materials/00-tmb-resources/00_00_TMB_Developer_Resources.html)
 
 ### 1. Software requirements: 
  - [R](https://posit.co/download/rstudio-desktop/)

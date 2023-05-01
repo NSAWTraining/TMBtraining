@@ -1,8 +1,9 @@
 pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
-articles: {}
-last_built: 2023-05-01T18:46Z
+articles:
+  000_Getting_Started_Contents: 000_Getting_Started_Contents.html
+last_built: 2023-05-01T19:30Z
 urls:
   reference: https://nsawtraining/tmbtraining.github.io/reference
   article: https://nsawtraining/tmbtraining.github.io/articles

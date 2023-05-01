@@ -28,8 +28,8 @@ devtools::install_github("NSAWTraining/TMBtraining")
 
 ## Respository Structure
 | Folder | Description |
-| -------|-------------|
-|[Getting Started](https://nsawtraining.github.io/TMBtraining/docs/articles/000_Getting_Started_Contents) | Links with helpful tips and resources on getting started with TMB
+| -------|-------------|                                      
+|[Getting Started](https://nsawtraining.github.io/TMBtraining/docs/articles/000_Getting_Started_Contents.html) | Links with helpful tips and resources on getting started with TMB
 <!-- Do not edit below. This adds the Disclaimer and NMFS footer. -->
 
 ****

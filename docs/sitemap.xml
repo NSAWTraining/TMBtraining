@@ -1,36 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://nmfs-fish-tools.github.io/pkgdownTemplate/404.html</loc>
+    <loc>https://nsawtraining/tmbtraining.github.io/404.html</loc>
   </url>
   <url>
-    <loc>https://nmfs-fish-tools.github.io/pkgdownTemplate/LICENSE-text.html</loc>
+    <loc>https://nsawtraining/tmbtraining.github.io/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://nmfs-fish-tools.github.io/pkgdownTemplate/Page.html</loc>
+    <loc>https://nsawtraining/tmbtraining.github.io/authors.html</loc>
   </url>
   <url>
-    <loc>https://nmfs-fish-tools.github.io/pkgdownTemplate/articles/index.html</loc>
+    <loc>https://nsawtraining/tmbtraining.github.io/index.html</loc>
   </url>
   <url>
-    <loc>https://nmfs-fish-tools.github.io/pkgdownTemplate/articles/samplevignette.html</loc>
+    <loc>https://nsawtraining/tmbtraining.github.io/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://nmfs-fish-tools.github.io/pkgdownTemplate/authors.html</loc>
+    <loc>https://nsawtraining/tmbtraining.github.io/news/index.html</loc>
   </url>
   <url>
-    <loc>https://nmfs-fish-tools.github.io/pkgdownTemplate/index.html</loc>
+    <loc>https://nsawtraining/tmbtraining.github.io/Page.html</loc>
   </url>
   <url>
-    <loc>https://nmfs-fish-tools.github.io/pkgdownTemplate/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://nmfs-fish-tools.github.io/pkgdownTemplate/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://nmfs-fish-tools.github.io/pkgdownTemplate/reference/samplefunction.html</loc>
-  </url>
-  <url>
-    <loc>https://nmfs-fish-tools.github.io/pkgdownTemplate/reference/sampleplot.html</loc>
+    <loc>https://nsawtraining/tmbtraining.github.io/reference/index.html</loc>
   </url>
 </urlset>

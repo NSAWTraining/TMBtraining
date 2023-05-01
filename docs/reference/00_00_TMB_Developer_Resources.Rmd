@@ -1,0 +1,25 @@
+---
+title: "TMB Developer Resources"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Collection of resources provided by the TMB development community
+
+[TMB development repository](https://github.com/kaskr/adcomp)
+
+ - [Discussions](https://github.com/kaskr/adcomp/issues)
+
+ - [Contributor's Guide](https://github.com/kaskr/adcomp/wiki/Development)
+
+[Welcome to the TMB Wiki](https://github.com/kaskr/adcomp/wiki#welcome-to-the-tmb-wiki)
+
+[The comprehensive TMB documentation](http://kaskr.github.io/adcomp/_book/Introduction.html)
+
+[User Forum](https://groups.google.com/forum/#!forum/tmb-users)
+
+[FAQ](https://github.com/kaskr/adcomp/wiki/FAQ)
+

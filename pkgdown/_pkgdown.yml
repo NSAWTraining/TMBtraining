@@ -12,7 +12,7 @@ navbar:
   components:
     home:
       icon: fas fa-home fa-lg
-      href: index.html
+      href: docs/index.html
 
     issue:
       text: Issues
@@ -29,9 +29,9 @@ navbar:
       icon: fas fa-book fa-lg
       menu:
       - text: TMB Developer Resources
-        href: https://nsawtraining.github.io/TMBtraining/training-materials/00-tmb-resources/00_00_TMB_Developer_Resources.html
+        href: https://nsawtraining.github.io/TMBtraining/00-tmb-resources/00_00_TMB_Developer_Resources.html
       - text: Getting Started with TMB
-        href: https://nsawtraining.github.io/TMBtraining/training-materials/00-tmb-resources/00_01_Getting_Started.html
+        href: https://nsawtraining.github.io/TMBtraining/00-tmb-resources/00_01_Getting_Started.html
 
 authors:
   Andrea Havron:

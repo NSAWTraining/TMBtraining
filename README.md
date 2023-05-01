@@ -1,6 +1,16 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# TMB Training
+# NSAW TMB Training Workshops May 8th
+
+## Before the workshop
+
+Please make sure you have R, TMB, and an R IDE installed. Please see
+[Getting Started with
+TMB](https://andrea-havron-noaa.github.io/TMBtraining/articles/00_01_Getting_Started.html)
+for software requirements and package installation instructions. The
+[TMB Developer
+Resources](https://andrea-havron-noaa.github.io/TMBtraining/articles/00_00_TMB_Developer_Resources.html)
+provide a collection of useful resources from the TMB developers
 
 <!-- badges: start -->
 
@@ -9,9 +19,19 @@ date)](https://img.shields.io/github/v/release/nmfs-fish-tools/pkgdownTemplate)]
 [![R-CMD-check](https://github.com/nmfs-fish-tools/pkgdownTemplate/workflows/R-CMD-check/badge.svg)](https://github.com/nmfs-fish-tools/pkgdownTemplate/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-A collection of TMB training materials and resources
+## NSAW Agendas
 
-## Installation
+[Beginner
+TMB](https://nsawtraining.github.io/TMBtraining/03-training-agendas/00_Beginner_TMB_Agenda.html)
+(9:00am - 12:30pm)
+
+## Training Materials are found under the `docs` directory
+
+| Folder                                                                                                 | Description                                                       |
+|--------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
+| [TMB Resources](https://nsawtraining.github.io/TMBtraining/articles/000_Getting_Started_Contents.html) | Links with helpful tips and resources on getting started with TMB |
+
+## Download materials
 
 You can install materials from
 [GitHub](https://NSAWTraining/TMBtraining) with:
@@ -20,24 +40,6 @@ You can install materials from
 # install.packages("devtools")
 devtools::install_github("NSAWTraining/TMBtraining")
 ```
-
-## New to TMB?
-
-- Check out the [Getting Started with
-  TMB](https://andrea-havron-noaa.github.io/TMBtraining/articles/00_01_Getting_Started.html)
-  guide with helpful resources on software requirements and installing
-  the TMB package.
-
-## NSAW Agendas
-
-[Beginner
-TMB](https://nsawtraining.github.io/TMBtraining/03-training-agendas/00_Beginner_TMB_Agenda.html)
-
-## Training Materials are found under the `docs` directory
-
-| Folder                                                                                                 | Description                                                       |
-|--------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
-| [TMB Resources](https://nsawtraining.github.io/TMBtraining/articles/000_Getting_Started_Contents.html) | Links with helpful tips and resources on getting started with TMB |
 
 <!-- Do not edit below. This adds the Disclaimer and NMFS footer. -->
 

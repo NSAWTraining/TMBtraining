@@ -25,11 +25,21 @@ You can install materials from [GitHub](https://NSAWTraining/TMBtraining) with:
 # install.packages("devtools")
 devtools::install_github("NSAWTraining/TMBtraining")
 ```
+## New to TMB? 
 
-## Respository Structure
+- Check out the [Getting Started with TMB](https://andrea-havron-noaa.github.io/TMBtraining/articles/00_01_Getting_Started.html) guide with helpful resources on software requirements and installing the TMB package.
+
+## NSAW Agendas
+[Beginner TMB](https://nsawtraining.github.io/TMBtraining/03-training-agendas/00_Beginner_TMB_Agenda.html)
+
+
+## Training Materials are found under the `docs` directory
 | Folder | Description |
 | -------|-------------|                                      
-|[Getting Started](https://nsawtraining.github.io/TMBtraining/articles/000_Getting_Started_Contents.html) | Links with helpful tips and resources on getting started with TMB
+|[TMB Resources](https://nsawtraining.github.io/TMBtraining/articles/000_Getting_Started_Contents.html) | Links with helpful tips and resources on getting started with TMB
+
+
+
 <!-- Do not edit below. This adds the Disclaimer and NMFS footer. -->
 
 ****

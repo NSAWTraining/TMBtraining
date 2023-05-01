@@ -7,10 +7,10 @@
 Please make sure you have R, TMB, and an R IDE installed. Please see
 [Getting Started with
 TMB](https://andrea-havron-noaa.github.io/TMBtraining/articles/00_01_Getting_Started.html)
-for software requirements and package installation instructions. The
+for software requirements and TMB package installation instructions. The
 [TMB Developer
 Resources](https://andrea-havron-noaa.github.io/TMBtraining/articles/00_00_TMB_Developer_Resources.html)
-provide a collection of useful resources from the TMB developers
+provide a collection of useful resources from the TMB developers.
 
 <!-- badges: start -->
 
@@ -22,7 +22,7 @@ date)](https://img.shields.io/github/v/release/nmfs-fish-tools/pkgdownTemplate)]
 ## NSAW Agendas
 
 [Beginner
-TMB](https://nsawtraining.github.io/TMBtraining/03-training-agendas/00_Beginner_TMB_Agenda.html)
+TMB](https://nsawtraining.github.io/TMBtraining/03-training-agendas/beginner-tmb-agenda.html)
 (9:00am - 12:30pm)
 
 ## Training Materials are found under the `docs` directory

@@ -7,11 +7,11 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-### Instructor:
+## Instructor:
 
 * [Andrea Havron](https://github.com/andrea-havron-noaa), NOAA Fisheries, Office of Science and Technology <a href = "mailto: andrea.havron@noaa.gov">Send Email</a>
 
-### Training Description
+## Training Description
 
 Template Model Builder (TMB) is a statistical computing platform that performs maximum likelihood inference and is easily extended to include random effects. Models are written in C++ and run with R using the TMB R package. This course will build from the [Beginner TMB course](https://nsawtraining.github.io/TMBtraining/03-training-agendas/beginner-tmb-agenda.html) and focus on input/output features, such as parameter mapping and model diagnostics. It will also cover simulation and random effects. <br>
 
@@ -34,6 +34,6 @@ Template Model Builder (TMB) is a statistical computing platform that performs m
 
 ![](https://user-images.githubusercontent.com/75965120/193709013-78b841f6-c986-4cd8-9c82-9d42afe0a152.jpg)
 
-*Remember, this is a **"Yes, And!" environment**. There are no wrong answers!* We are all here to learn and support each other :raised_hands:
+*Remember, this is a **"Yes, And!" environment**. There are no wrong answers!* We are all here to learn and support each other 
 
 In short, we expect each participant to follow the [workshop's code of conduct](https://www.amstat.org/meetings/code-of-conduct). If you have any concerns, please reach out to the workshop organizers. 

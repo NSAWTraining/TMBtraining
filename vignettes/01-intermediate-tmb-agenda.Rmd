@@ -7,13 +7,13 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Instructor:
+## Instructor
 
 * [Andrea Havron](https://github.com/andrea-havron-noaa), NOAA Fisheries, Office of Science and Technology <a href = "mailto: andrea.havron@noaa.gov">Send Email</a>
 
 ## Training Description
 
-Template Model Builder (TMB) is a statistical computing platform that performs maximum likelihood inference and is easily extended to include random effects. Models are written in C++ and run with R using the TMB R package. This course will build from the [Beginner TMB course](https://nsawtraining.github.io/TMBtraining/03-training-agendas/beginner-tmb-agenda.html) and focus on input/output features, such as parameter mapping and model diagnostics. It will also cover simulation and random effects. <br>
+Template Model Builder (TMB) is a statistical computing platform that performs maximum likelihood inference and is easily extended to include random effects. Models are written in C++ and run with R using the TMB R package. This course will build from the [Beginner TMB course](https://nsawtraining.github.io/TMBtraining/articles/00-beginner-tmb-agenda.html) and focus on input/output features, such as parameter mapping and model diagnostics. It will also cover simulation and random effects. <br>
 
 **Prerequisites**: Attendees will need R and an R IDE installed on their local machine. The TMB R package also needs to be installed from CRAN. Please see [Getting Started with TMB](https://nsawtraining.github.io/TMBtraining/articles/00_01_Getting_Started.html) for software requirements and TMB package installation instructions. The [TMB Developer Resources](https://nsawtraining.github.io/TMBtraining/articles/00_00_TMB_Developer_Resources.html) provide a collection of useful resources from the TMB developers. Attendes should have a beginner level understanding of how to set up and run a TMB model.  
 

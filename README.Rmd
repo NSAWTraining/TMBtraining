@@ -31,7 +31,7 @@ date)](https://img.shields.io/github/v/release/nmfs-fish-tools/pkgdownTemplate)]
 
 ## Download materials
 
-You can install materials from [GitHub](https://NSAWTraining/TMBtraining) with:
+You can install materials from [GitHub](https://github.com/NSAWTraining/TMBtraining) with:
 
 ``` r
 # install.packages("devtools")

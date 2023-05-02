@@ -36,7 +36,7 @@ TMB](https://nsawtraining.github.io/TMBtraining/articles/01-intermediate-tmb-age
 ## Download materials
 
 You can install materials from
-[GitHub](https://NSAWTraining/TMBtraining) with:
+[GitHub](https://github.com/NSAWTraining/TMBtraining) with:
 
 ``` r
 # install.packages("devtools")

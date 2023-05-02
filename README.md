@@ -22,9 +22,9 @@ date)](https://img.shields.io/github/v/release/nmfs-fish-tools/pkgdownTemplate)]
 ## NSAW Agendas
 
 [Beginner
-TMB](https://nsawtraining.github.io/TMBtraining/03-training-agendas/00-beginner-tmb-agenda.html)
+TMB](https://nsawtraining.github.io/TMBtraining/articles/00-beginner-tmb-agenda.html)
 (9:00am - 12:30pm)<br> [Intermediate
-TMB](https://nsawtraining.github.io/TMBtraining/03-training-agendas/01-intermediate-tmb-agenda.html)
+TMB](https://nsawtraining.github.io/TMBtraining/articles/01-intermediate-tmb-agenda.html)
 (2:00pm - 5:30pm)
 
 ## Training Materials are found under the `docs` directory

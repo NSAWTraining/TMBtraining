@@ -39,3 +39,6 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 inst/doc
+
+# Temporary ignore files
+*docs/01-beginner-tmb/

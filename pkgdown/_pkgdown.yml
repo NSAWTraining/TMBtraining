@@ -24,9 +24,9 @@ navbar:
       icon: fas fa-file-contract fa-lg
       menu:
       - text: Beginner TMB
-        href: https://nsawtraining.github.io/TMBtraining/03-training-agendas/00-beginner-tmb-agenda.html
+        href: https://nsawtraining.github.io/TMBtraining/articles/00-beginner-tmb-agenda.html
       - text: Intermediate TMB
-        href: https://nsawtraining.github.io/TMBtraining/03-training-agendas/00-intermediate-tmb-agenda.html
+        href: https://nsawtraining.github.io/TMBtraining/articles/00-intermediate-tmb-agenda.html
       
     documents:
       text: Resources

@@ -6,10 +6,10 @@
 
 Please make sure you have R, TMB, and an R IDE installed. Please see
 [Getting Started with
-TMB](https://andrea-havron-noaa.github.io/TMBtraining/articles/00_01_Getting_Started.html)
+TMB](https://nsawtraining.github.io/TMBtraining/articles/00_01_Getting_Started.html)
 for software requirements and TMB package installation instructions. The
 [TMB Developer
-Resources](https://andrea-havron-noaa.github.io/TMBtraining/articles/00_00_TMB_Developer_Resources.html)
+Resources](https://nsawtraining.github.io/TMBtraining/articles/00_00_TMB_Developer_Resources.html)
 provide a collection of useful resources from the TMB developers.
 
 <!-- badges: start -->

@@ -20,12 +20,16 @@ navbar:
       href: https://nsawtraining.github.io/TMBtraining/issues/
 
     articles:
-      text: Vignettes
+      text: Agendas
       icon: fas fa-file-contract fa-lg
-      href: articles/index.html
+      menu:
+      - text: Beginner TMB
+        href: https://nsawtraining.github.io/TMBtraining/03-training-agendas/00-beginner-tmb-agenda.html
+      - text: Intermediate TMB
+        href: https://nsawtraining.github.io/TMBtraining/03-training-agendas/00-intermediate-tmb-agenda.html
       
     documents:
-      text: References
+      text: Resources
       icon: fas fa-book fa-lg
       menu:
       - text: TMB Developer Resources

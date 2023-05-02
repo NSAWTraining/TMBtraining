@@ -9,6 +9,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Use the following guides to set-up and start using TMB:
 
-[TMB Resources](https://nsawtraining.github.io/TMBtraining/training-materials/00-tmb-resources/00_00_TMB_Developer_Resources.html)
+[TMB Resources](https://nsawtraining.github.io/TMBtraining/articles/00_00_TMB_Developer_Resources.html)
 
-[Getting Started with TMB](https://nsawtraining.github.io/TMBtraining/training-materials/00-tmb-resources/00_01_Getting_Started.html)
+[Getting Started with TMB](https://nsawtraining.github.io/TMBtraining/articles/00_01_Getting_Started.html)

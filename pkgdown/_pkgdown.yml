@@ -17,7 +17,7 @@ navbar:
     issue:
       text: Issues
       icon: fas fa-question-circle fa-lg
-      href: https://nsawtraining.github.io/TMBtraining/issues/
+      href: https://github.com/NSAWTraining/TMBtraining/issues/
 
     articles:
       text: Agendas
@@ -26,16 +26,16 @@ navbar:
       - text: Beginner TMB
         href: https://nsawtraining.github.io/TMBtraining/articles/00-beginner-tmb-agenda.html
       - text: Intermediate TMB
-        href: https://nsawtraining.github.io/TMBtraining/articles/00-intermediate-tmb-agenda.html
+        href: https://nsawtraining.github.io/TMBtraining/articles/01-intermediate-tmb-agenda.html
       
     documents:
       text: Resources
       icon: fas fa-book fa-lg
       menu:
       - text: TMB Developer Resources
-        href: https://nsawtraining.github.io/TMBtraining/00-tmb-resources/00_00_TMB_Developer_Resources.html
+        href: https://nsawtraining.github.io/TMBtraining/articles/00_00_TMB_Developer_Resources.html
       - text: Getting Started with TMB
-        href: https://nsawtraining.github.io/TMBtraining/00-tmb-resources/00_01_Getting_Started.html
+        href: https://nsawtraining.github.io/TMBtraining/articles/00_01_Getting_Started.html
 
 authors:
   Andrea Havron:

@@ -1,0 +1,295 @@
+---
+title:  "TMB Debugging"
+author: "Andrea Havron<br>NOAA Fisheries, OST"
+output:
+  xaringan::moon_reader:
+    self_contained: true
+    css: ["xaringan-themer.css", "slides-style.css"]
+    lib_dir: libs
+    nature:
+      ratio: '4:3'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc( (%current% - 1) / (%total% - 1) * 100%);">
+          </div>
+        </div>`
+---
+layout: true
+
+.footnote[U.S. Department of Commerce | National Oceanic and Atmospheric Administration | National Marine Fisheries Service]
+
+
+<style type="text/css">
+
+code.cpp{
+  font-size: 14px;
+}
+code.r{
+  font-size: 14px;
+}
+
+
+</style>
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+```{r xaringan-tile-view, echo=FALSE}
+# this gives you a tile navigation if you type "O" at any time
+xaringanExtra::use_tile_view()
+```
+
+---
+# Debugging: Error types<br><br>
+.pull-left[
+1. Compile time errors
+2. TMB-R linkage errors
+3. Runtime errors
+4. Convergence errors
+5. Validation errors
+]
+---
+
+# Debugging: Error types<br>
+.pull-left[
+1. **Compile time errors**
+2. TMB-R linkage errors
+3. Runtime errors
+4. Convergence errors
+5. Validation errors
+]
+
+.pull-right[
+Fails with errors when compiling
+* Incorrect syntax: e.g., missing **)** or **;**
+* Wrong type, for example:
+  * int instead of Type
+  * passing matrix to a function that accepts a vector
+* Undeclared variable
+]
+
+.pull-left[
+linReg.cpp
+```cpp
+DATA_VECTOR(y
+DATA_MATRIX(X);
+
+PARAMETER_VECTOR(beta);
+
+int nll;
+matrix<Type> mu = X*beta;
+nll = -dnorm(y,mu,sigma,true)
+return nll;
+```
+]
+
+
+---
+# Debugging: Error types<br>
+.pull-left[
+1. **Compile time errors**
+2. TMB-R linkage errors
+3. Runtime errors
+4. Convergence errors
+5. Validation errors
+]
+
+.pull-right[
+```cpp
+DATA_VECTOR(y
+DATA_MATRIX(X);
+
+PARAMETER_VECTOR(beta);
+
+int nll;
+matrix<Type> mu = X*beta;
+nll = -dnorm(y,mu,sigma,true)
+return nll;
+```
+]
+
+.pull-left[
+linReg.R
+```{r, eval = FALSE}
+setwd("2022_TMB_Session_I")
+
+#compilation flags when using gdbsource
+
+#On Linus/OS X
+TMB::compile("src/debug1.cpp","-O0 -g")
+
+#On Windows
+TMB::compile("src/debug1.cpp","-O1 -g",
+             DLLFLAGS="")
+```
+]
+
+.pull-right[
+Console
+```{r, eval = FALSE}
+#Debug using RStudio:
+> TMB:::setupRStudio()
+> TMB::compile("src/debug1.cpp")
+
+#Debug using gdbsource
+#hangs on Windows
+> TMB::gdbsource("R/debug_gdbsource.R")
+#works on Windows but not always 
+#informative
+> TMB::gdbsource("R/debug_gdbsource.R", 
+                 interactive = TRUE)
+```
+]
+
+
+---
+
+# Debugging: Error types<br>
+.pull-left[
+1. Compile time errors
+2. **TMB-R linkage errors**
+3. Runtime errors
+4. Convergence errors
+5. Validation errors
+]
+
+.pull-right[
+Compiles but MakeADFun crashes
+* .dll not loaded in R
+* Incorrect data/parameter types or missing value
+* Dimension mismatch
+]
+
+.pull-left[
+```cpp
+DATA_VECTOR(y);
+DATA_MATRIX(X);
+
+PARAMETER_VECTOR(beta);
+PARAMETER(lnSigma);
+Type sigma = exp(lnSigma);
+
+Type nll = 0;
+vector<Type> mu = X*beta;
+nll -= sum(dnorm(y,mu,sigma,true));
+return nll;
+```
+]
+
+.pull-right[
+linReg.R
+```{r, eval = FALSE}
+library(TMB)
+compile(linReg.cpp)
+Data <- list(y = c(-2.1, 3.3, 4.2),
+             X = data.frame(c(1,1),c(4,5)))
+Pars <- list(beta = 0)
+obj <- MakeADFun(data = Data, 
+                 parameters = Pars, 
+                 DLL = "linReg")
+```
+]
+
+---
+
+# Debugging: Error types<br>
+.pull-left[
+1. Compile time errors
+2. TMB-R linkage errors
+3. **Runtime errors**
+4. Convergence errors
+5. Validation errors
+]
+
+.pull-right[
+Model fails during minimization
+  * Data-distribution mismatich 
+  * Incorrect parameter transformation
+  * Not taking log of the likelihood
+  * Illegal mathematical operations, eg. log(-1)
+]
+
+.pull-left[
+debug2.cpp
+```cpp
+DATA_VECTOR(y);
+DATA_MATRIX(X);
+
+PARAMETER_VECTOR(beta);
+PARAMETER(lnSigma);
+
+Type nll = 0;
+Type sigma = exp(lnSigma);
+vector<Type> mu = X*beta;
+nll -= sum(dlnorm(y,mu,sigma));
+return nll;
+```
+]
+
+.pull-right[
+simple.R
+```{r, eval = FALSE}
+library(TMB)
+compile("debug2.cpp")
+dyn.lib(dynload("debug2"))
+Data <- list(y = c(-2.1, 3.3, 4.2),
+             X = cbind(c(1,1,1),c(4,5,2)))
+Pars <- list(beta = c(0,0), sigma = 0)
+obj <- MakeADFun(data = Data, 
+                 parameters = Pars, 
+                 DLL = "linReg")
+opt <- nlminb(obj$par, obj$fn, obj$gr)
+```
+]
+
+---
+
+# Debugging: Error types<br>
+.pull-left[
+1. Compile time errors
+2. TMB-R linkage errors
+3. Runtime errors
+4. **Convergence errors**
+5. Validation errors
+]
+
+.pull-right[
+ Model compiles and runs but fails to converge
+  * Singular convergence: model is likely overparameterized
+  * False convergence: likelihood may be discontinuous
+  * Relative convergence but Hessian not positive definite: singularity
+]
+
+**Non-Invertible Hessians**
+* The Hessian will **not be invertible** if the MLE is not a true minimum (ie. flat likelihood surface)
+* When could this occur? 
+  * Usually mis-specified models
+  * Parameters confounded or overparameterized (too complex for data)
+* TMB will warn about uninvertible Hessians (NaNs)
+
+---
+
+# Debugging: Error types<br>
+.pull-left[
+1. Compile time errors
+2. TMB-R linkage errors
+3. Runtime errors
+4. Convergence errors
+5. **Validation errors**
+]
+
+.pull-right[
+ Model compiles and runs and passes convergence tests but is incorrect
+  * Model structure is mis-specified
+  * Incorrect distribution for observations
+  * Incorrect random effect structure
+]
+
+
+
+

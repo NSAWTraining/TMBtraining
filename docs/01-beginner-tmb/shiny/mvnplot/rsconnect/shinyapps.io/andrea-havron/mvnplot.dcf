@@ -1,0 +1,11 @@
+name: mvnplot
+title:
+username:
+account: andrea-havron
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 9003040
+bundleId: 7160916
+url: https://andrea-havron.shinyapps.io/mvnplot/
+when: 1682973042.40259
+lastSyncTime: 1682973042.40259

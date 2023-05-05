@@ -1,0 +1,25 @@
+---
+title: Getting Started with TMB
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+Beginner tutorials:
+
+- [A review of statistical computing with TMB](https://andrea-havron-noaa.github.io/TMBtraining/docs/02_Beginner_TMB/00_Likelihoods_AD.html)
+
+- [TMB Basics](https://andrea-havron-noaa.github.io/TMBtraining/docs/02_Beginner_TMB/TMB_Basics.html)
+
+- [Parameters and Simulations](https://andrea-havron-noaa.github.io/TMBtraining/docs/02_Beginner_TMB/Parameters.html)
+
+- [Beginners Guide to Debugging](https://andrea-havron-noaa.github.io/TMBtraining/docs/02_Beginner_TMB/Debugging_I.html)

@@ -1,0 +1,43 @@
+library(TMB)
+#compile("docs/02-intermediate-tmb/lecture_code/thetalog.cpp")
+#dyn.load(dynlib("docs/02-intermediate-tmb/lecture_code/thetalog"))
+compile("lecture_code/thetalog.cpp")
+dyn.load(dynlib("lecture_code/thetalog"))
+
+## Read data
+#Y <- scan("docs/02-intermediate-tmb/lecture_code/thetalog.dat", skip=3, quiet=TRUE)
+Y <- scan("lecture_code/thetalog.dat", skip=3, quiet=TRUE)
+data <- list(Y=Y)
+
+## Parameter initial guess
+parameters <- list(
+  X = data$Y*0,
+  lnr0 = 0,
+  lntheta = 0,
+  lnK = 6,
+  lnsdx = 0,
+  lnsdy = 0
+)
+
+## Fit model
+obj <- MakeADFun(data, parameters, random="X", DLL="thetalog")
+opt <- nlminb(obj$par, obj$fn, obj$gr)
+report <- obj$report()
+sdr <- sdreport(obj)
+sdr
+
+
+# Get Hessian
+# Use: C = LL^T, L = lower triangular cholesky
+# log(det(C)) = 2trace(log(L))
+H <- obj$env$spHess(obj$env$last.par.best, random = TRUE)
+L <- chol(H)
+logdetH <- 2*sum(log(diag(L)))
+#Calculate the Laplace approximation
+-length(parameters$X)/2 * log(2*pi) + 0.5 * logdetH + report$nll
+
+opt$objective
+
+# run in tmbstan
+# library(tmbstan)
+# tmbstan(obj)

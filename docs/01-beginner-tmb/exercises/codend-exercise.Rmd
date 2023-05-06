@@ -1,0 +1,33 @@
+---
+title: "Size Selectivity Exercise"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+<br>
+The dataset, [stownet](https://nsawtraining.github.io/TMBtraining/docs/01-beginner-tmb/exercises/stownet.RData), contains length-frequency data from a size selectivity experiment on haddock from a fishing trawl. The dataset contains the length classes and counts of fish retained in the codend and the cover. The codend is the aft part of a trawl and the cover is a fine mesh placed around the codend to determine the number and length of fish able to swim through the codend and represent those released from the trawl. The data are for 19 replicate hauls, but we will ignore haul ID for this exercise. This exercise is described in detail in Millar, R.B. (2011), data are from Clark (1957). 
+
+Fit a logistic regression model to the data using a binomial distribution in TMB:
+<br><br>
+
+\begin{align}
+\eta_{i} &= \beta_{0} + \beta_{1}L_{i}\\
+&\\
+p_{i} &= \frac{1}{1+exp(-\eta)}\\
+&\\
+N &= Codend + Cover\\
+&\\
+Codend &\sim Binomial(N, p)
+\end{align}
+<br>
+Plot the observed probability of catch in the codend by length along with the expected probability vector from the model.
+
+Of particular interest to management is the length of 50\% retention, or $$l_{50} = -\beta_{0}/\beta_{1}$$ Find the estimate and standard error for this value.
+
+<br>
+
+**References:**<br> 
+- Clark, J.R. 1957. Effect of length of haul on cod end escapement. ICNAF/ICES/FAO workshop on selectivity, Lisbon. Paper S25.<br>
+- Millar, R.B. 2011. Maximum likelihood estimation and inference: With examples in R, SAS, and ADMB. Wiley, Auckland, New Zealand. pg. 155-160.

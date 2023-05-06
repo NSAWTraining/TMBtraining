@@ -641,7 +641,6 @@ obj$simulate(complete = TRUE)
 ```
 *Note*
 * optimization not necessary for simulation
-* not vectorized like in R
 ]
 
 ---
@@ -727,20 +726,7 @@ Changes the problem from integration to optimization &lt;br&gt;
 &lt;br&gt;
 Figure from [Albertsen, C. M. (2018), 2.3.1](https://backend.orbit.dtu.dk/ws/portalfiles/portal/157133664/Publishers_version.pdf)
 ]
----
-# The Laplace approximation&lt;br&gt;
 
-Changes the problem from integration to optimization &lt;br&gt;
-.pull-left[
-`$$L(\theta) = \int_{\mathbb{R}}f(y;u,\theta)f(u;\theta)du$$`&lt;br&gt;&lt;br&gt;
-`$$L^{*}(\theta) = \sqrt{2\pi}^{n}det(\mathbb{H})^{-1/2}f(y,\hat{u}, \theta)$$`&lt;br&gt;&lt;br&gt;
-`$$d&#39;(l^{*}) = d&#39;(logdet(\mathbb{H})^{-1/2}) + d&#39;(log(f(y,\hat{u}, \theta)))$$`
-]
-.pull-right[
-&lt;img src=&quot;data:image/png;base64,#static/laplace-accuracy.png&quot; width=&quot;100%&quot; style=&quot;display: block; margin: auto auto auto 0;&quot; /&gt;
-&lt;br&gt;
-Figure from [Albertsen, C. M. (2018), 2.3.1](https://backend.orbit.dtu.dk/ws/portalfiles/portal/157133664/Publishers_version.pdf)
-]
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>

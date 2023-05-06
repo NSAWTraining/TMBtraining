@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://nsawtraining/tmbtraining.github.io/00-tmb-resources/00_00_TMB_Developer_Resources.html</loc>
+    <loc>https://nsawtraining/tmbtraining.github.io/01-beginner-tmb/00_00_Statistical_Computing_Review.html</loc>
   </url>
   <url>
-    <loc>https://nsawtraining/tmbtraining.github.io/00-tmb-resources/00_01_Getting_Started.html</loc>
+    <loc>https://nsawtraining/tmbtraining.github.io/01-beginner-tmb/00_01_TMB_Preliminaries.html</loc>
+  </url>
+  <url>
+    <loc>https://nsawtraining/tmbtraining.github.io/01-beginner-tmb/00_02_Debugging.html</loc>
+  </url>
+  <url>
+    <loc>https://nsawtraining/tmbtraining.github.io/01-beginner-tmb/exercises/codend-exercise.html</loc>
+  </url>
+  <url>
+    <loc>https://nsawtraining/tmbtraining.github.io/02-intermediate-tmb/LMV.html</loc>
   </url>
   <url>
     <loc>https://nsawtraining/tmbtraining.github.io/404.html</loc>

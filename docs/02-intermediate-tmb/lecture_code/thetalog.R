@@ -25,19 +25,30 @@ opt <- nlminb(obj$par, obj$fn, obj$gr)
 report <- obj$report()
 sdr <- sdreport(obj)
 sdr
+summary(sdr, "fixed")
+summary(sdr, "random")
 
+report$nll_re
+report$nll_obs
+report$nll
+opt$objective
+
+# -log marginal likelihood:
+# -nRE/2 * log(2*pi) + 0.5 * log(det(H)) + joint nll
 
 # Get Hessian
-# Use: C = LL^T, L = lower triangular cholesky
-# log(det(C)) = 2trace(log(L))
 H <- obj$env$spHess(obj$env$last.par.best, random = TRUE)
+# log(det(C)) = 2trace(log(L))
+# Use: C = LL^T, L = lower triangular cholesky
 L <- chol(H)
 logdetH <- 2*sum(log(diag(L)))
 #Calculate the Laplace approximation
 -length(parameters$X)/2 * log(2*pi) + 0.5 * logdetH + report$nll
 
 opt$objective
+obj$fn()
 
-# run in tmbstan
+## Run TMB model in Stan using tmbstan
+# install.packages(tmbstan)
 # library(tmbstan)
 # tmbstan(obj)

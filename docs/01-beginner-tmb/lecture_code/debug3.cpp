@@ -21,7 +21,7 @@ Type objective_function<Type>::operator()()
   vector<Type> sigma = exp(lnSigma);
 
   for(int i=0; i<y.size(); i++){
-    nll -= dnorm(y(i), mu(i), sigma(i));
+    nll -= dlnorm(y(i), mu(i), sigma(i));
   }
   
   REPORT(sigma);

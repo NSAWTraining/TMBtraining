@@ -2,10 +2,10 @@ library(TMB)
 
 #Debug using RStudio:
 TMB:::setupRStudio()
-compile('2022_TMB_Session_I/src/debug1.cpp')
+compile('docs/01-beginner-tmb/lecture_code/debug1.cpp')
 
 #TMB 1.8.0: disable Eigen warnings
-compile('2022_TMB_Session_I/src/debug1.cpp', eigen.disable.warnings = TRUE)
+compile('docs/01-beginner-tmb/lecture_code/debug1.cpp', eigen.disable.warnings = TRUE)
 
 
 #------------------------------------------------------------------------
@@ -33,45 +33,45 @@ y = rnorm(50, mu, sig)
 
 #Debug using gdbsource
 #hangs on Windows
-#gdbsource("2022_TMB_Session_I/R/debug_gdbsource.R")
+#gdbsource("docs/01-beginner-tmb/lecture_code/debug_gdbsource.R")
 #works on Windows with interactive mode
-gdbsource("2022_TMB_Session_I/R/debug_gdbsource.R", 
+gdbsource("docs/01-beginner-tmb/lecture_code/debug_gdbsource.R", 
           interactive = TRUE)
 
-compile('2022_TMB_Session_I/src/linReg.cpp')
-dyn.load(dynlib('2022_TMB_Session_I/src/linReg'))
+compile('docs/01-beginner-tmb/lecture_code/linReg.cpp')
+dyn.load(dynlib('docs/01-beginner-tmb/lecture_code/linReg'))
 Data <- list(y = c(-2.1, 3.3, 4.2),
-             X = cbind(c(1,1,1),c(4,5,6))
+             X = data.frame(c(1,1,1),c(4,5,6))
 )
-Pars <- list(beta = c(0,0), lnSigma = 0)
+Pars <- list(beta = c(0,0))
 obj <- MakeADFun(data = Data, 
                  parameters = Pars,  
                  DLL = "linReg")
 
-dyn.unload(dynlib('2022_TMB_Session_I/src/linReg'))
+dyn.unload(dynlib('docs/01-beginner-tmb/lecture_code/linReg'))
 #---------------------------------------------------------------------
 # Run-time errors
 #--------------------------------------------------------------------
 
-compile("2022_TMB_Session_I/src/debug2.cpp")
-dyn.load(dynlib("2022_TMB_Session_I/src/debug2"))
-Data <- list(y = c(2.1, 3.3, 4.2),
+compile("docs/01-beginner-tmb/lecture_code/debug2.cpp")
+dyn.load(dynlib("docs/01-beginner-tmb/lecture_code/debug2"))
+Data <- list(y = c(-2.1, 3.3, 4.2),
              X = cbind(c(1,1,1),c(4,5,2)))
-Pars <- list(beta = c(0,0), lnSigma = 0)
+Pars <- list(beta = c(0,0), sigma = 0)
 obj <- MakeADFun(data = Data, 
                  parameters = Pars, 
                  DLL = "debug2")
 opt <- nlminb(obj$par, obj$fn, obj$gr)
 opt$convergence
 
-dyn.unload(dynlib("2022_TMB_Session_I/src/debug2"))
+dyn.unload(dynlib("docs/01-beginner-tmb/lecture_code/debug2"))
 
 #----------------------------------------------------------------------
 # Convergence errors
 #----------------------------------------------------------------------
 
-compile("2022_TMB_Session_I/src/debug3.cpp")
-dyn.load(dynlib("2022_TMB_Session_I/src/debug3"))
+compile("docs/01-beginner-tmb/lecture_code/debug3.cpp")
+dyn.load(dynlib("docs/01-beginner-tmb/lecture_code/debug3"))
 
 set.seed(123)
 sig <- 2
@@ -98,13 +98,13 @@ sdr <- sdreport(obj)
 sdr$pdHess
 length(opt$par)
 summary(sdr, "report")
-dyn.unload(dynlib("2022_TMB_Session_I/src/debug3"))
+dyn.unload(dynlib("docs/01-beginner-tmb/lecture_code/debug3"))
 
 #------------------------------------------------------------------
 # Model Validation
 #------------------------------------------------------------------
 
-dyn.load(dynlib("2022_TMB_Session_I/src/linReg"))
+dyn.load(dynlib("docs/01-beginner-tmb/lecture_code/linReg"))
 
 set.seed(123)
 sig <- 1

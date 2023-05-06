@@ -1,7 +1,7 @@
 ## Illustrate map feature of TMB to perform likelihood ratio tests on a ragged array dataset.
 library(TMB)
-compile("2022_TMB_Session_I/src/lr_test.cpp")
-dyn.load(dynlib("2022_TMB_Session_I/src/lr_test"))
+compile("docs/01-beginner-tmb/lecture_code/lr_test.cpp")
+dyn.load(dynlib("docs/01-beginner-tmb/lecture_code/lr_test"))
 
 ngroup <- 5
 nrep <- c(5,8,11,13,2)  ## Number of samples per group
@@ -36,8 +36,8 @@ restricted.model1 <- MakeADFun(data=list(obs=obs,group=group),
 restricted.model1$par
 
 ##Both mu's and sd's restricted to be equal
-map <- list(mu=factor(c(1,1,1,1,1)),sd=factor(c(1,1,1,1,1)))
-map <- list(mu = factor(c(NA, NA, NA, NA, NA)), sd = factor(c(NA, NA, NA, NA, NA)))
+map <- list(mu=factor(c(1,1,1,1,1)), sd=factor(c(1,1,1,1,1)) )
+map <- list(mu = factor(c(NA, NA, NA, NA, NA)))
 map <- list(mu=factor(c(1 ,2,3,4,5)),sd=factor(c(1,2,3,4,5)))
 restricted.model2 <- MakeADFun(data=list(obs=obs,group=group),
                                parameters=list(mu=rep(0,ngroup),sd=rep(1,ngroup)),

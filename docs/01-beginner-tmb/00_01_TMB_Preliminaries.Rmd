@@ -354,7 +354,6 @@ obj$simulate(complete = TRUE)
 ```
 *Note*
 * optimization not necessary for simulation
-* not vectorized like in R
 ]
 
 ---
@@ -422,20 +421,5 @@ knitr::include_graphics("static/laplace-accuracy.png")
 <br>
 Figure from [Albertsen, C. M. (2018), 2.3.1](https://backend.orbit.dtu.dk/ws/portalfiles/portal/157133664/Publishers_version.pdf)
 ]
----
-# The Laplace approximation<br>
 
-Changes the problem from integration to optimization <br>
-.pull-left[
-$$L(\theta) = \int_{\mathbb{R}}f(y;u,\theta)f(u;\theta)du$$<br><br>
-$$L^{*}(\theta) = \sqrt{2\pi}^{n}det(\mathbb{H})^{-1/2}f(y,\hat{u}, \theta)$$<br><br>
-$$d'(l^{*}) = d'(logdet(\mathbb{H})^{-1/2}) + d'(log(f(y,\hat{u}, \theta)))$$
-]
-.pull-right[
-```{r, echo = FALSE, out.width="100%", fig.align="left"}
-knitr::include_graphics("static/laplace-accuracy.png")
-```
-<br>
-Figure from [Albertsen, C. M. (2018), 2.3.1](https://backend.orbit.dtu.dk/ws/portalfiles/portal/157133664/Publishers_version.pdf)
-]
 

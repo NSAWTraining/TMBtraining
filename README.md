@@ -32,6 +32,7 @@ TMB](https://nsawtraining.github.io/TMBtraining/articles/01-intermediate-tmb-age
 | Folder                                                                                                 | Description                                                       |
 |--------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
 | [TMB Resources](https://nsawtraining.github.io/TMBtraining/articles/000_Getting_Started_Contents.html) | Links with helpful tips and resources on getting started with TMB |
+| [Beginner TMB](https://nsawtraining.github.io/TMBtraining/articles/001_Beginner_TMB_Contents.html)     | Materials for NSAW Beginner TMB Course                            |
 
 ## Download materials
 

@@ -1,0 +1,21 @@
+---
+title: "Getting Started with TMB"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+### Slides
+
+- [Statistical Computing Review](https://nsawtraining.github.io/TMBtraining/01-beginner-tmb/00_00_Statistical_Computing_Review.html#1)
+
+- [TMB Preliminaries](https://nsawtraining.github.io/TMBtraining/01-beginner-tmb/00_01_TMB_Preliminaries.html)
+
+- [Debugging](https://nsawtraining.github.io/TMBtraining/01-beginner-tmb/00_02_Debugging.html)
+
+### Exercise
+- [Size Selectivity](https://nsawtraining.github.io/TMBtraining/01-beginner-tmb/exercises/codend-exercise.html)
+
+### Examples
+- [TMB Models and R scripts](https://github.com/NSAWTraining/TMBtraining/tree/main/docs/01-beginner-tmb/lecture_code)

@@ -360,7 +360,7 @@ Fails with errors when compiling
 ]
 
 .pull-left[
-linReg.cpp
+[**linReg.cpp**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/linReg.cpp)
 ```cpp
 DATA_VECTOR(y
 DATA_MATRIX(X);
@@ -400,7 +400,7 @@ return nll;
 ]
 
 .pull-left[
-linReg.R
+[**linReg.R**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/linReg.R)
 
 ```r
 setwd(&quot;2022_TMB_Session_I&quot;)
@@ -470,7 +470,7 @@ return nll;
 ]
 
 .pull-right[
-linReg.R
+[**linReg.R**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/linReg.R)
 
 ```r
 library(TMB)
@@ -504,7 +504,7 @@ Model fails during minimization
 ]
 
 .pull-left[
-debug2.cpp
+[**debug2.cpp**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/debug2.cpp)
 ```cpp
 DATA_VECTOR(y);
 DATA_MATRIX(X);
@@ -521,11 +521,11 @@ return nll;
 ]
 
 .pull-right[
-simple.R
+[**debugging.R**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/debugging.R)
 
 ```r
 library(TMB)
-compile(&quot;debug2.cpp&quot;)
+compile(&quot;debug.cpp&quot;)
 dyn.lib(dynload(&quot;debug2&quot;))
 Data &lt;- list(y = c(-2.1, 3.3, 4.2),
              X = cbind(c(1,1,1),c(4,5,2)))

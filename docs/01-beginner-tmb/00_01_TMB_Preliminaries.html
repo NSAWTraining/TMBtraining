@@ -329,17 +329,14 @@ code.r{
 
 
 
-&lt;!-- modified from Cole Monnahan&#39;s TMB training series:  https://github.com/colemonnahan/tmb_workshop--&gt;
-
-
 ---
 
 # TMB Model
 
 
 .pull-left[
+[**linReg.cpp**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/linReg.cpp)
 ```cpp
-// Simple linear regression
 #include &lt;TMB.hpp&gt;
 template &lt;class Type&gt;
   
@@ -571,7 +568,7 @@ summary(sdr, &quot;report&quot;)
 ---
 # Parameter mapping with LR test
 &lt;br&gt;
-TMB example: [**lr_test.cpp**](https://github.com/kaskr/adcomp/blob/master/tmb_examples/lr_test.cpp)
+TMB example: [**lr_test.cpp**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/linReg.cpp)
 
 ```cpp
 / Illustrate map feature of TMB to perform likelihood ratio tests on a ragged array dataset.
@@ -647,7 +644,7 @@ obj$simulate(complete = TRUE)
 #Simulation Study
 
 .pull-left[
-linReg.cpp
+[**linReg.cpp**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/linReg.cpp)
 ```cpp
  for(int i=0; i&lt;n; i++){
     nll -= dnorm(y(i), mu(i), sigma, true);
@@ -726,7 +723,53 @@ Changes the problem from integration to optimization &lt;br&gt;
 &lt;br&gt;
 Figure from [Albertsen, C. M. (2018), 2.3.1](https://backend.orbit.dtu.dk/ws/portalfiles/portal/157133664/Publishers_version.pdf)
 ]
+---
+# Running from R
 
+.pull-left[
+[**first_re.cpp**](&quot;https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/first_re.cpp&quot;)
+```cpp
+#include &lt;TMB.hpp&gt;
+
+template&lt;class Type&gt;
+Type objective_function&lt;Type&gt;::operator() ()
+{
+  DATA_VECTOR(y);         
+  DATA_SPARSE_MATRIX(B);  
+  DATA_SPARSE_MATRIX(X); 
+  PARAMETER_VECTOR(u);    
+  PARAMETER_VECTOR(beta); 
+  PARAMETER(lnSDu);      
+  PARAMETER(lnSDy);   
+
+  Type nll = 0;
+  Type sdu = exp(lnSDu);
+  nll1 -= sum(dnorm(u, Type(0), sdu, true));
+
+  vector&lt;Type&gt; mu = X * beta + B * u;
+  Type sdy = exp(lnSDy);
+  for(int i=0; i&lt;y.size(); i++){
+    nll2 -= dnorm(y(i), mu(i), sdy, true);
+  }
+
+  return nll;
+}
+```
+]
+
+.pull-right[
+
+```r
+Dat &lt;- list(y=y, B=B, X=X)
+Par &lt;- list(u=u*0, beta=beta*0, 
+            lnSDu=1, lnSDy=1)
+obj &lt;- MakeADFun(Dat, Par,
+                 random=&quot;u&quot;, 
+                 DLL=&quot;first_re&quot;
+                 )
+opt &lt;- nlminb(obj$par, obj$fn, obj$gr)
+```
+]
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>

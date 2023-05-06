@@ -428,6 +428,52 @@ Changes the problem from **integration** $\rightarrow$ **optimization** <br>
 
 $$L(\theta) = \int_{\mathbb{R}}f(y,u;\theta)f(u;\theta)du \hspace{1cm}\rightarrow\hspace{1cm} L^{*}(\theta) = \sqrt{2\pi}^{n}det(\mathbb{H})^{-1/2}f(y,\hat{u}; \theta)$$
 ---
+# Running from R
+
+.pull-left[
+[first_re.cpp]("02-intermediate-tmb/lecture_code/first_re.cpp")
+```cpp
+#include <TMB.hpp>
+
+template<class Type>
+Type objective_function<Type>::operator() ()
+{
+  DATA_VECTOR(y);         
+  DATA_SPARSE_MATRIX(B);  
+  DATA_SPARSE_MATRIX(X); 
+  PARAMETER_VECTOR(u);    
+  PARAMETER_VECTOR(beta); 
+  PARAMETER(lnSDu);      
+  PARAMETER(lnSDy);   
+
+  Type nll = 0;
+  Type sdu = exp(lnSDu);
+  nll1 -= sum(dnorm(u, Type(0), sdu, true));
+
+  vector<Type> mu = X * beta + B * u;
+  Type sdy = exp(lnSDy);
+  for(int i=0; i<y.size(); i++){
+    nll2 -= dnorm(y(i), mu(i), sdy, true);
+  }
+
+  return nll;
+}
+```
+]
+
+.pull-right[
+```{r, eval = FALSE}
+Dat <- list(y=y, B=B, X=X)
+Par <- list(u=u*0, beta=beta*0, 
+            lnSDu=1, lnSDy=1)
+obj <- MakeADFun(Dat, Par,
+                 random="u", 
+                 DLL="first_re"
+                 )
+opt <- nlminb(obj$par, obj$fn, obj$gr)
+```
+]
+---
 # Separability
 
 If $y_{i}$ is only dependent on $u_{i}$, then the likelihood function is **separable**
@@ -555,6 +601,8 @@ array<Type> NAA_devs(n_years_model+n_years_proj-1, n_ages);
 ...
 nll_NAA += SEPARABLE(VECSCALE(AR1(NAA_rho_a), sigma_a_sig),AR1(NAA_rho_y))(NAA_devs);
 ```
+
+
 
 
 

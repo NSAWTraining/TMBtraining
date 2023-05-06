@@ -4,7 +4,7 @@ library(ggplot2)
 
 fluidPage(
   
-  titlePanel("MVN curvature"),
+  titlePanel("NLL curvature"),
   
   sidebarPanel(
     
@@ -19,6 +19,8 @@ fluidPage(
   ),
   
   mainPanel(
-    plotOutput('plot')
+    plotOutput('plot'),
+    tableOutput('table1'),
+    tableOutput('table2')
   )
 )

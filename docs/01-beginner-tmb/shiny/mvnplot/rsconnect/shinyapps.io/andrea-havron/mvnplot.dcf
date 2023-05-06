@@ -5,7 +5,7 @@ account: andrea-havron
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 9003040
-bundleId: 7160916
+bundleId: 7183273
 url: https://andrea-havron.shinyapps.io/mvnplot/
-when: 1682973042.40259
-lastSyncTime: 1682973042.40259
+when: 1683409275.57584
+lastSyncTime: 1683409275.57584

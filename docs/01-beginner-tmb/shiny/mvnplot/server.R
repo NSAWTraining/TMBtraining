@@ -1,10 +1,10 @@
 library(shiny)
 library(ggplot2)
+library(mvtnorm)
 
 function(input, output) {
   
   output$plot <- renderPlot({
-    library(mvtnorm)
     
     cor2cov <- function(R,sd2){
       S <- c(sd2, sd2)
@@ -20,9 +20,13 @@ function(input, output) {
         z[i,j] <- dmvnorm(c(x[i],y[j]), sigma = Sigma)
       }
     }
+    colnames(Sigma) <- c("Sigma", " ")
+    H <- -solve(Sigma)
+    colnames(H) <- c("H", " ")
     
     persp(x, y, -log(z), zlim = range(0,12))
-    print(round(-solve(Sigma),3))
+    output$table1 <- renderTable(round(Sigma, 3))
+    output$table2 <- renderTable(round(H,3))
     
   })
 }

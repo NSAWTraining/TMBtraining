@@ -40,5 +40,8 @@ vignettes/*.pdf
 .Renviron
 inst/doc
 
-# Temporary ignore files
-*docs/01-beginner-tmb/
+*.o
+*.dll
+*.so
+
+*/docs/02-intermediate-tmb/static/pictures

@@ -15,4 +15,4 @@ knitr::opts_chunk$set(echo = TRUE)
 - [Spatial Modeling](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/SpatialModels.pdf)
 
 ### Examples
-- [TMB Models and R scripts](https://github.com/NSAWTraining/TMBtraining/tree/main/docs/02-beginner-tmb/lecture_code)
+- [TMB Models and R scripts](https://github.com/NSAWTraining/TMBtraining/tree/main/docs/02-intermediate-tmb/lecture_code)

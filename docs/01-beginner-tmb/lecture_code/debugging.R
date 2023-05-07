@@ -114,7 +114,6 @@ X <- cbind(rep(1,n), 1:n)
 mu <- X%*%beta
 y = rnorm(n, mu, sig)
 
-plot(X[,2], y)
 
 #correctly specified model
 Data0 <- list(y = y, 
@@ -154,4 +153,3 @@ osa1 <- oneStepPredict(obj1, observation.name = "y", method = "fullGaussian")
 qqnorm(osa1$residual);abline(0,1)
 #calculate AIC
 2 * (opt1$objective + length(opt1$par))
-plot(X[,2], osa1$residual)

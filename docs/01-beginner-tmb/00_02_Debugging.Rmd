@@ -7,7 +7,7 @@ output:
     css: ["xaringan-themer.css", "slides-style.css"]
     lib_dir: libs
     nature:
-      ratio: '4:3'
+      ratio: '16:9'
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
@@ -210,7 +210,6 @@ obj <- MakeADFun(data = Data,
 Model fails during minimization
   * Data-distribution mismatich 
   * Incorrect parameter transformation
-  * Not taking log of the likelihood
   * Illegal mathematical operations, eg. log(-1)
 ]
 
@@ -260,6 +259,7 @@ opt <- nlminb(obj$par, obj$fn, obj$gr)
 
 .pull-right[
  Model compiles and runs but fails to converge
+  * Issue with the negative log likelihood
   * Singular convergence: model is likely overparameterized
   * False convergence: likelihood may be discontinuous
   * Relative convergence but Hessian not positive definite: singularity

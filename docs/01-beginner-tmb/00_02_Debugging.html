@@ -403,15 +403,13 @@ return nll;
 [**linReg.R**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/linReg.R)
 
 ```r
-setwd(&quot;2022_TMB_Session_I&quot;)
-
 #compilation flags when using gdbsource
 
 #On Linus/OS X
-TMB::compile(&quot;src/debug1.cpp&quot;,&quot;-O0 -g&quot;)
+TMB::compile(&quot;debug1.cpp&quot;,&quot;-O0 -g&quot;)
 
 #On Windows
-TMB::compile(&quot;src/debug1.cpp&quot;,&quot;-O1 -g&quot;,
+TMB::compile(&quot;debug1.cpp&quot;,&quot;-O1 -g&quot;,
              DLLFLAGS=&quot;&quot;)
 ```
 ]
@@ -422,14 +420,14 @@ Console
 ```r
 #Debug using RStudio:
 &gt; TMB:::setupRStudio()
-&gt; TMB::compile(&quot;src/debug1.cpp&quot;)
+&gt; TMB::compile(&quot;debug1.cpp&quot;)
 
 #Debug using gdbsource
 #hangs on Windows
-&gt; TMB::gdbsource(&quot;R/debug_gdbsource.R&quot;)
+&gt; TMB::gdbsource(&quot;debug_gdbsource.R&quot;)
 #works on Windows but not always 
 #informative
-&gt; TMB::gdbsource(&quot;R/debug_gdbsource.R&quot;, 
+&gt; TMB::gdbsource(&quot;debug_gdbsource.R&quot;, 
                  interactive = TRUE)
 ```
 ]
@@ -470,7 +468,7 @@ return nll;
 ]
 
 .pull-right[
-[**linReg.R**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/linReg.R)
+[**linReg.R**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/linreg.R)
 
 ```r
 library(TMB)

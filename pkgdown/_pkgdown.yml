@@ -6,6 +6,7 @@ navbar:
     - home
     - issue
     - articles
+    - beginner
     - documents
     right: github
     
@@ -27,6 +28,18 @@ navbar:
         href: https://nsawtraining.github.io/TMBtraining/articles/00-beginner-tmb-agenda.html
       - text: Intermediate TMB
         href: https://nsawtraining.github.io/TMBtraining/articles/01-intermediate-tmb-agenda.html
+        
+    beginner:
+      text: Beginner TMB
+      icon: fas fa-file-contract fa-lg
+      menu:
+      - text: Statistical Computing Review
+        href: https://nsawtraining.github.io/TMBtraining/01-beginner-tmb/00_00_Statistical_Computing_Review.html
+      - text: TMB Preliminaries
+        href: https://nsawtraining.github.io/TMBtraining/01-beginner-tmb/00_01_TMB_Preliminaries.html
+      - text: Debugging
+        href: https://nsawtraining.github.io/TMBtraining/01-beginner-tmb/00_02_Debugging.html
+      
       
     documents:
       text: Resources

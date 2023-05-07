@@ -1,5 +1,5 @@
 ---
-title: "Getting Started with TMB"
+title: "Beginner TMB Contents"
 output: html_document
 ---
 

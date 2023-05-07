@@ -29,7 +29,7 @@ for(i in 1:4){
   for(s in 2:length(X)) Y[s] = Y[s-1]*Rho[i] + rnorm(1, mean=0, sd=Conditional_Sigma[i])
   plot( x=X, y=Y, xlab="location", ylab="value", ylim=c(-3,3), type="l", main=paste0("Rho = ",Rho[i]) )
 }
-#dev.off()
+dev.off()
 ###################
 # Math check on inverse-covariance matrix
 ###################
@@ -39,10 +39,7 @@ x <- 1:10
 Dist <- outer(x, x, FUN=function(a,b){abs(a-b)})
 
 # Calculate Q directly
-Sigma2[1,1] <- 1
-Sigma2[10,10] <- 1
 Cov <- Sigma2 / (1-Rho^2) * Rho^Dist
-
 Q <- solve(Cov)
 Cov
 
@@ -50,10 +47,12 @@ Cov
 M <- diag(length(x)) * (1+Rho^2)
 M[ cbind(1:9,2:10) ] <- -Rho
 M[ cbind(2:10,1:9) ] <- -Rho
+M[1,1] <- 1
+M[10,10] <- 1
 Q2 = 1/Sigma2 * M
-Q2[1,1] <- 1
-#Q2[10,10] <- 1
-plot(Cov, solve(Q2))
+round(Q,4)
+round(Q2,4)
+plot(Cov, solve(Q2));abline(0,1)
 ###################
 # Equal time-step autoregressive
 ###################
@@ -118,80 +117,80 @@ for(i in 1:5){
 
 # Benchmark Analysis ================================================
 
-n <- 100
-set.seed(123)
-Pars$u <- rnorm(n)
-bnmk_n100 <- rbenchmark::benchmark(
-  "Conditional Independence" = { 
-    u <- rep(NA, n)
-    u[1] <- rnorm(1, mean=0, sd=sqrt(Sigma2))
-    for(i in 2:n){
-      u[i] <- Rho*u[i-1] + rnorm(1, mean=0, sd=sqrt(Sigma2))
-    } 
-    y <- rpois(n, exp(beta0 + u) )
-    Data <- list( Options_vec = 0, 
-                  y = y )
-    Obj <- TMB::MakeADFun( data=Data, parameters=Pars, random="u", DLL="autoregressive" )
-    # Optimize
-    Opt <- nlminb(Obj$par, Obj$fn, Obj$gr)
-  },
-  "Analytic Precision" = {
-    u <- rep(NA, n)
-    u[1] <- rnorm(1, mean=0, sd=sqrt(Sigma2))
-    for(i in 2:n){
-      u[i] <- Rho*u[i-1] + rnorm(1, mean=0, sd=sqrt(Sigma2))
-    } 
-    y <- rpois(n, exp(beta0 + u) )
-    Data <- list( Options_vec = 1, 
-                  y = y )
-    Obj <- TMB::MakeADFun( data=Data, parameters=Pars, random="u", DLL="autoregressive" )
-    # Optimize
-    Opt <- nlminb(Obj$par, Obj$fn, Obj$gr)
-  },
-  "Built-in GMRF" = {
-    u <- rep(NA, n)
-    u[1] <- rnorm(1, mean=0, sd=sqrt(Sigma2))
-    for(i in 2:n){
-      u[i] <- Rho*u[i-1] + rnorm(1, mean=0, sd=sqrt(Sigma2))
-    } 
-    y <- rpois(n, exp(beta0 + u) )
-    Data <- list( Options_vec = 2, 
-                 y = y )
-    Obj <- TMB::MakeADFun( data=Data, parameters=Pars, random="u", DLL="autoregressive" )
-    # Optimize
-    Opt <- nlminb(Obj$par, Obj$fn, Obj$gr)
-  },
-  "Covariance and MVNORM" = {
-    u <- rep(NA, n)
-    u[1] <- rnorm(1, mean=0, sd=sqrt(Sigma2))
-    for(i in 2:n){
-      u[i] <- Rho*u[i-1] + rnorm(1, mean=0, sd=sqrt(Sigma2))
-    } 
-    y <- rpois(n, exp(beta0 + u) )
-    Data <- list( Options_vec = 3, 
-                 y = y )
-    Obj <- TMB::MakeADFun( data=Data, parameters=Pars, random="u", DLL="autoregressive" )
-    # Optimize
-    Opt <- nlminb(Obj$par, Obj$fn, Obj$gr)
-  },
-  "Built-in AR1" = {
-    u <- rep(NA, n)
-    u[1] <- rnorm(1, mean=0, sd=sqrt(Sigma2))
-    for(i in 2:n){
-      u[i] <- Rho*u[i-1] + rnorm(1, mean=0, sd=sqrt(Sigma2))
-    } 
-    y <- rpois(n, exp(beta0 + u) )
-    Data <- list( Options_vec = 4, 
-                 y = y )
-    Obj <- TMB::MakeADFun( data=Data, parameters=Pars, random="u", DLL="autoregressive" )
-    # Optimize
-    Opt <- nlminb(Obj$par, Obj$fn, Obj$gr)
-  },
-  replications = 100,
-  columns = c("test", "replications", "elapsed",
-              "relative", "user.self", "sys.self")
-)
-bnmk_n10[order(bnmk_n10$elapsed),]
+# n <- 100
+# set.seed(123)
+# Pars$u <- rnorm(n)
+# bnmk_n100 <- rbenchmark::benchmark(
+#   "Conditional Independence" = { 
+#     u <- rep(NA, n)
+#     u[1] <- rnorm(1, mean=0, sd=sqrt(Sigma2))
+#     for(i in 2:n){
+#       u[i] <- Rho*u[i-1] + rnorm(1, mean=0, sd=sqrt(Sigma2))
+#     } 
+#     y <- rpois(n, exp(beta0 + u) )
+#     Data <- list( Options_vec = 0, 
+#                   y = y )
+#     Obj <- TMB::MakeADFun( data=Data, parameters=Pars, random="u", DLL="autoregressive" )
+#     # Optimize
+#     Opt <- nlminb(Obj$par, Obj$fn, Obj$gr)
+#   },
+#   "Analytic Precision" = {
+#     u <- rep(NA, n)
+#     u[1] <- rnorm(1, mean=0, sd=sqrt(Sigma2))
+#     for(i in 2:n){
+#       u[i] <- Rho*u[i-1] + rnorm(1, mean=0, sd=sqrt(Sigma2))
+#     } 
+#     y <- rpois(n, exp(beta0 + u) )
+#     Data <- list( Options_vec = 1, 
+#                   y = y )
+#     Obj <- TMB::MakeADFun( data=Data, parameters=Pars, random="u", DLL="autoregressive" )
+#     # Optimize
+#     Opt <- nlminb(Obj$par, Obj$fn, Obj$gr)
+#   },
+#   "Built-in GMRF" = {
+#     u <- rep(NA, n)
+#     u[1] <- rnorm(1, mean=0, sd=sqrt(Sigma2))
+#     for(i in 2:n){
+#       u[i] <- Rho*u[i-1] + rnorm(1, mean=0, sd=sqrt(Sigma2))
+#     } 
+#     y <- rpois(n, exp(beta0 + u) )
+#     Data <- list( Options_vec = 2, 
+#                  y = y )
+#     Obj <- TMB::MakeADFun( data=Data, parameters=Pars, random="u", DLL="autoregressive" )
+#     # Optimize
+#     Opt <- nlminb(Obj$par, Obj$fn, Obj$gr)
+#   },
+#   "Covariance and MVNORM" = {
+#     u <- rep(NA, n)
+#     u[1] <- rnorm(1, mean=0, sd=sqrt(Sigma2))
+#     for(i in 2:n){
+#       u[i] <- Rho*u[i-1] + rnorm(1, mean=0, sd=sqrt(Sigma2))
+#     } 
+#     y <- rpois(n, exp(beta0 + u) )
+#     Data <- list( Options_vec = 3, 
+#                  y = y )
+#     Obj <- TMB::MakeADFun( data=Data, parameters=Pars, random="u", DLL="autoregressive" )
+#     # Optimize
+#     Opt <- nlminb(Obj$par, Obj$fn, Obj$gr)
+#   },
+#   "Built-in AR1" = {
+#     u <- rep(NA, n)
+#     u[1] <- rnorm(1, mean=0, sd=sqrt(Sigma2))
+#     for(i in 2:n){
+#       u[i] <- Rho*u[i-1] + rnorm(1, mean=0, sd=sqrt(Sigma2))
+#     } 
+#     y <- rpois(n, exp(beta0 + u) )
+#     Data <- list( Options_vec = 4, 
+#                  y = y )
+#     Obj <- TMB::MakeADFun( data=Data, parameters=Pars, random="u", DLL="autoregressive" )
+#     # Optimize
+#     Opt <- nlminb(Obj$par, Obj$fn, Obj$gr)
+#   },
+#   replications = 100,
+#   columns = c("test", "replications", "elapsed",
+#               "relative", "user.self", "sys.self")
+# )
+# bnmk_n100[order(bnmk_n100$elapsed),]
 
 #save(bnmk_n100, file = "docs/02-intermediate-tmb/lecture_code/bnmk_n100.Rdata")
 
@@ -201,37 +200,37 @@ bnmk_n100[order(bnmk_n100$elapsed),]
 
 #Simulation Analysis ==============================================
 
-n.sim <- 1000
-n <- 100
-Pars <- list( beta0 = 0, 
-              ln_sigma2 = 0, 
-              logit_rho = 0, 
-              u = rnorm(n) )
-nm <- paste0("SimStudy_n", ii)
-beta0.est <- rho.est <- sigma2.est <- matrix(0,n.sim,5)
+# n.sim <- 1000
+# n <- 100
+# Pars <- list( beta0 = 0, 
+#               ln_sigma2 = 0, 
+#               logit_rho = 0, 
+#               u = rnorm(n) )
+# nm <- paste0("SimStudy_n", ii)
+# beta0.est <- rho.est <- sigma2.est <- matrix(0,n.sim,5)
+# 
+# for(s in 1:n.sim){
+#   u <- rep(NA, n)
+#   u[1] <- rnorm(1, mean=0, sd=sqrt(Sigma2))
+#   for(i in 2:n){
+#     u[i] <- Rho*u[i-1] + rnorm(1, mean=0, sd=sqrt(Sigma2))
+#   } 
+#   y <- rpois(n, exp(beta0 + u) )
+#   Data <- list( Options_vec = 0, 
+#                 y = y )
+#   for(i in 1:5){
+#     Data$Options_vec <- i-1
+#     Obj <- TMB::MakeADFun( data=Data, parameters=Pars, random="u", DLL="autoregressive" )
+#     Opt <- nlminb(Obj$par, Obj$fn, Obj$gr)
+#     Rep <- Obj$report()
+#     beta0.est[s,i] <- Opt$par['beta0']
+#     rho.est[s,i] <- Rep$rho
+#     sigma2.est[s,i] <- Rep$sigma2
+#   }
+# }
+# save(beta0.est, rho.est, sigma2.est, file = paste0("docs/02-intermediate-tmb/lecture_code/SimStudy_n1.RData"))
 
-for(s in 1:n.sim){
-  u <- rep(NA, n)
-  u[1] <- rnorm(1, mean=0, sd=sqrt(Sigma2))
-  for(i in 2:n){
-    u[i] <- Rho*u[i-1] + rnorm(1, mean=0, sd=sqrt(Sigma2))
-  } 
-  y <- rpois(n, exp(beta0 + u) )
-  Data <- list( Options_vec = 0, 
-                y = y )
-  for(i in 1:5){
-    Data$Options_vec <- i-1
-    Obj <- TMB::MakeADFun( data=Data, parameters=Pars, random="u", DLL="autoregressive" )
-    Opt <- nlminb(Obj$par, Obj$fn, Obj$gr)
-    Rep <- Obj$report()
-    beta0.est[s,i] <- Opt$par['beta0']
-    rho.est[s,i] <- Rep$rho
-    sigma2.est[s,i] <- Rep$sigma2
-  }
-}
-save(beta0.est, rho.est, sigma2.est, file = paste0("SimStudy_n1.RData"))
-
-load("SimStudy_n1.RData")
+load("docs/02-intermediate-tmb/lecture_code/SimStudy_n1.RData")
 
 beta0.mean <- apply(beta0.est,2,mean)
 names(beta0.mean) <- cov.nms

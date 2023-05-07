@@ -74,6 +74,8 @@ Type objective_function<Type>::operator() ()
       Q_ii(i-1,i) = -rho/sigma2;
       Q_ii(i,i-1) = -rho/sigma2;
     }
+    Q_ii(0,0) = 1/sigma2;
+    Q_ii((n_i-1), (n_i-1)) = 1/sigma2;
     REPORT( Q_ii )
     jnll_comp(1) -= dmvnorm( u, Q_ii, true );
   }
@@ -86,6 +88,8 @@ Type objective_function<Type>::operator() ()
       Q_ii.coeffRef(i-1,i) = -rho;
       Q_ii.coeffRef(i,i-1) = -rho;
     }
+    Q_ii.coeffRef(0,0) = Type(1.0);
+    Q_ii.coeffRef((n_i-1), (n_i-1)) = Type(1.0);
     REPORT( Q_ii );
     jnll_comp(1) += SCALE( GMRF( Q_ii ), sqrt(sigma2) )( u );
   }

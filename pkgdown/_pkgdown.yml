@@ -40,6 +40,17 @@ navbar:
       - text: Debugging
         href: https://nsawtraining.github.io/TMBtraining/01-beginner-tmb/00_02_Debugging.html
       
+    intermediate:
+      text: Intermediate TMB
+      icon: fas fa-file-contract fa-lg
+      menu:
+      - text: Review of Latent Variable Models
+        href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/LVM.html
+      - text: Separability and Sparsity
+        href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/AR1.html
+      - text: Spatial Modeling
+        href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/SpatialModels.pdf
+      
       
     documents:
       text: Resources

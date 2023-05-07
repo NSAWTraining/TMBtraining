@@ -29,7 +29,7 @@ for(i in 1:4){
   for(s in 2:length(X)) Y[s] = Y[s-1]*Rho[i] + rnorm(1, mean=0, sd=Conditional_Sigma[i])
   plot( x=X, y=Y, xlab="location", ylab="value", ylim=c(-3,3), type="l", main=paste0("Rho = ",Rho[i]) )
 }
-dev.off()
+#dev.off()
 ###################
 # Math check on inverse-covariance matrix
 ###################
@@ -39,18 +39,21 @@ x <- 1:10
 Dist <- outer(x, x, FUN=function(a,b){abs(a-b)})
 
 # Calculate Q directly
+Sigma2[1,1] <- 1
+Sigma2[10,10] <- 1
 Cov <- Sigma2 / (1-Rho^2) * Rho^Dist
+
 Q <- solve(Cov)
 Cov
-Q
 
 # Calculate Q analytically
 M <- diag(length(x)) * (1+Rho^2)
 M[ cbind(1:9,2:10) ] <- -Rho
 M[ cbind(2:10,1:9) ] <- -Rho
 Q2 = 1/Sigma2 * M
-Q2
-
+Q2[1,1] <- 1
+#Q2[10,10] <- 1
+plot(Cov, solve(Q2))
 ###################
 # Equal time-step autoregressive
 ###################
@@ -115,10 +118,10 @@ for(i in 1:5){
 
 # Benchmark Analysis ================================================
 
-n <- 10
+n <- 100
 set.seed(123)
 Pars$u <- rnorm(n)
-bnmk_n10 <- rbenchmark::benchmark(
+bnmk_n100 <- rbenchmark::benchmark(
   "Conditional Independence" = { 
     u <- rep(NA, n)
     u[1] <- rnorm(1, mean=0, sd=sqrt(Sigma2))

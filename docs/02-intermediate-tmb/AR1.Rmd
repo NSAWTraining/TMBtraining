@@ -1,6 +1,5 @@
 ---
-title:  "AR1 process and sparsity"
-subtitle: "TMB Training Session II"
+title:  "Separability and Sparsity"
 author: "Andrea Havron<br>NOAA Fisheries, OST"
 output:
   xaringan::moon_reader:
@@ -44,6 +43,140 @@ options(htmltools.dir.version = FALSE)
 # this gives you a tile navigation if you type "O" at any time
 xaringanExtra::use_tile_view()
 ```
+---
+# Separability
+
+If $y_{i}$ is only dependent on $u_{i}$, then the likelihood function is **separable**
+
+\begin{align}
+L(\theta) &= \int \prod^{n}_{i=1}f(y_{i}, u_{i};\theta)du_{i}\\
+&= \prod^{n}_{i=1}\int f(y_{i}, u_{i};\theta)du_{i}
+\end{align}
+
+The marginal likelihood can be evaluated as a series of univariate Laplace approximations:
+\begin{align}
+L^{*}(\theta) &= \sqrt{2\pi}^{n}det(\mathbb{H})^{-1/2}f(y,\hat{u}; \theta)\\
+&\\
+&= \prod^{n}_{i=1}f(y_{i}, \hat{u}_{i};\theta)\sqrt{\frac{2\pi}{(-f''(y_{i},\hat{u_{i}};\theta))^{-1}}}
+\end{align}
+
+Under separability, the Hessian, $\mathbb{H}$, is sparse
+---
+# Sparsity
+
+.pull-left[
+
+Theta logistic state-space model:
+\begin{align}
+u_{t} &= u_{t-1} + r_{0}\bigg(1 - \Big(\frac{exp(u_{t-1})}{K}\Big)^{\psi}\bigg) \\
+&\\
+u_{t} &\sim N(0, \sigma_{u})\\
+y_{t} &\sim N(u_{t}, \sigma_{y})
+\end{align}
+
+```{r, eval = FALSE}
+source("lecture_code/thetalog.R")
+obj <- MakeADFun(data, parameters, random=c("X"), 
+                 DLL="thetalog")
+Matrix::image(obj$env$spHess(random=TRUE))
+```
+<br>
+Example from [TMB's comprehensive documentation](https://kaskr.github.io/adcomp/_book/Sparsity.html#the-theta-logistic-example) gitbook
+]
+
+.pull-right[
+```{r, echo = FALSE, , out.width="65%", fig.align="center"}
+knitr::include_graphics("static/state-space-dag.png")
+```
+
+```{r, echo = FALSE, message = FALSE, results = FALSE, out.width="65%", fig.align="center"}
+source("lecture_code/thetalog.R")
+obj <- MakeADFun(data, parameters, random=c("X"), DLL="thetalog")
+Matrix::image(obj$env$spHess(random=TRUE))
+```
+]
+
+
+---
+# Implementing Sparsity in TMB
+<br>
+
+.pull-left[
+- Dependency on Eigen (C++ library) for sparse data types
+- Automatically detects sparsity in the Hessian
+- 'Optimizes' the computational graph based on sparsity patterns
+- A sparse Cholesky factorization is used to evaluate the sparse Hessian
+]
+
+.pull-right[
+**Bayesian Sparsity Comparison**<br>
+Sparse spatial model run time (min)
+
+|Sample Size|tmbstan|Stan|
+|-----------|-------|----|
+| 32        |5.9    |1072|
+| 64        |7.5    |1716|
+| 128       |8.7    |    |
+
+]
+
+---
+# Implementing Sparsity in TMB
+<br>
+**Data Types**
+
+- [**SparseMatrix**](https://eigen.tuxfamily.org/dox/group__TutorialSparse.html)
+ - Declares $\text{Eigen::SparseMatrix<Type>}$ from the Eigen sparse module
+
+
+**TMB macro**
+
+- [**DATA_SPARSE_MATRIX**](https://kaskr.github.io/adcomp/group__macros.html#ga75dbde3f78d762602b7ffc0f19a99e1e)
+ - Get sparse matrix from R and declare it as $\text{Eigen::SparseMatrix<Type>}$
+ 
+---
+# Implementing Sparsity in TMB
+
+- Classes are specified in the density namespace
+- Note NEGATIVE log-likelihood is returned
+
+**Density functions** <br>
+[**AR1**](https://kaskr.github.io/adcomp/classdensity_1_1AR1__t.html) $\quad\quad\quad\quad~~$ $\text{class density::AR1_t<distribution>}$
+- Class to evaluate the negative log density of a (multivariate) AR1 process with parameter phi and given marginal distribution.
+  
+[**GMRF**](https://kaskr.github.io/adcomp/classdensity_1_1GMRF__t.html) $\quad\quad\quad~~$ $\text{class density::GMRF_t<distribution>}$
+- Class to evaluate the negative log density of a mean zero multivariate normal distribution with a sparse precision matrix
+
+[**SEPARABLE**](https://kaskr.github.io/adcomp/classdensity_1_1SEPARABLE__t.html) $\quad$ $\text{density::SEPARABLE_t<distribution1, distribution2>}$
+- Take two densities f and g, and construct the density of their separable extension
+
+
+
+
+---
+# Applications in Fisheries
+
+[WHAM](https://github.com/timjmiller/wham/blob/master/src/wham_v0.cpp) examples
+
+[Multivariate random effect for mortality, age by year, using 2D AR1 density:](https://github.com/timjmiller/wham/blob/97577f1d619607ec40fdb8d3097f30668af16999/src/wham_v0.cpp#L483)
+
+```cpp
+PARAMETER_ARRAY(M_re); // random effects for year- and age-varying M deviations from mean M_a), dim = n_years x n_M_a
+...
+nll_M += SCALE(SEPARABLE(AR1(rho_M_a),AR1(rho_M_y)), Sigma_M)(M_re);
+```
+
+[Multivariate random effect for numbers at age, age by year, using 2D AR1 density:](https://github.com/timjmiller/wham/blob/97577f1d619607ec40fdb8d3097f30668af16999/src/wham_v0.cpp#L934)
+
+```cpp
+array<Type> NAA_devs(n_years_model+n_years_proj-1, n_ages);
+...
+nll_NAA += SEPARABLE(VECSCALE(AR1(NAA_rho_a), sigma_a_sig),AR1(NAA_rho_y))(NAA_devs);
+```
+
+
+
+
 
 ---
 # AR1 process
@@ -106,7 +239,7 @@ $$\Sigma = \frac{\sigma^{2}}{1-\rho^{2}} \begin{bmatrix}
 .pull-right[
 ```{r, echo = FALSE, message = FALSE, results = FALSE, out.width="65%", fig.align="center"}
 library(INLA)
-TMB::runExample("thetalog")
+source("lecture_code/thetalog.R")
 obj <- MakeADFun(data, parameters, random=c("X"), DLL="thetalog")
 Matrix::image(solve(obj$env$spHess(random=TRUE)))
 ```
@@ -130,7 +263,7 @@ $$Q = \Sigma^{-1} = \frac{1}{\sigma^{2}} \begin{bmatrix}
 
 .pull-right[
 ```{r, echo = FALSE, message = FALSE, results = FALSE, out.width="65%", fig.align="center"}
-TMB::runExample("thetalog")
+source("lecture_code/thetalog.R")
 obj <- MakeADFun(data, parameters, random=c("X"), DLL="thetalog")
 Matrix::image(obj$env$spHess(random=TRUE))
 ```

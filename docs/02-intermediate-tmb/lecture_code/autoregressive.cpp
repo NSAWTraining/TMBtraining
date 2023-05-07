@@ -60,7 +60,7 @@ Type objective_function<Type>::operator() ()
   // Probability of random effects
   using namespace density;
   
-  //// Manually set-up AD1 structure
+  //// Conditional Independence
   if( Options_vec(0)==0 ){
     jnll_comp(1) -= dnorm( u(0), Type(0.0), pow(sigma2,0.5), true );
     for(int i=1; i<n_i; i++) jnll_comp(1) -= dnorm( u(i), rho*u(i-1), pow(sigma2,0.5), true );

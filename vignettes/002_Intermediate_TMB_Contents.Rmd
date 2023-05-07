@@ -1,0 +1,18 @@
+---
+title: "Intermediate TMB Contents"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+### Slides
+
+- [Review of Latent Variable Models](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/LVM.html)
+
+- [Separability and Sparsity](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/AR1.html)
+
+- [Spatial Modeling](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/SpatialModels.pdf)
+
+### Examples
+- [TMB Models and R scripts](https://github.com/NSAWTraining/TMBtraining/tree/main/docs/02-beginner-tmb/lecture_code)

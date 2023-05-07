@@ -30,10 +30,16 @@ sdr
 summary(sdr, "fixed")
 summary(sdr, "random")
 
+X.est <- obj$env$parList()$X
+
+# plot(1:length(Y), Y)
+# lines(1:length(Y), X.est, col='red', lwd = 2)
+
 report$nll_re
 report$nll_obs
 report$nll
 opt$objective
+obj$fn()
 
 # -log marginal likelihood:
 # -nRE/2 * log(2*pi) + 0.5 * log(det(H)) + joint nll

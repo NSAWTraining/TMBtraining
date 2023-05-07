@@ -1,6 +1,8 @@
 library(TMB)
+#use path from docs when running code
 #compile("docs/02-intermediate-tmb/lecture_code/thetalog.cpp")
 #dyn.load(dynlib("docs/02-intermediate-tmb/lecture_code/thetalog"))
+#use path from 02-intermediate-tmb when generating Rmarkdown
 compile("lecture_code/thetalog.cpp")
 dyn.load(dynlib("lecture_code/thetalog"))
 

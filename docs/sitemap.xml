@@ -13,7 +13,10 @@
     <loc>https://nsawtraining/tmbtraining.github.io/01-beginner-tmb/exercises/codend-exercise.html</loc>
   </url>
   <url>
-    <loc>https://nsawtraining/tmbtraining.github.io/02-intermediate-tmb/LMV.html</loc>
+    <loc>https://nsawtraining/tmbtraining.github.io/02-intermediate-tmb/AR1.html</loc>
+  </url>
+  <url>
+    <loc>https://nsawtraining/tmbtraining.github.io/02-intermediate-tmb/LVM.html</loc>
   </url>
   <url>
     <loc>https://nsawtraining/tmbtraining.github.io/404.html</loc>
@@ -23,6 +26,9 @@
   </url>
   <url>
     <loc>https://nsawtraining/tmbtraining.github.io/articles/000_Getting_Started_Contents.html</loc>
+  </url>
+  <url>
+    <loc>https://nsawtraining/tmbtraining.github.io/articles/001_Beginner_TMB_Contents.html</loc>
   </url>
   <url>
     <loc>https://nsawtraining/tmbtraining.github.io/articles/00_00_TMB_Developer_Resources.html</loc>

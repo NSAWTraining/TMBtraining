@@ -1,25 +1,32 @@
+#install INLA from website (not on CRAN or github)
+#install.packages("INLA",repos=c(getOption("repos"),INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
+install.packages("inlabru")
 library(INLA)
 library(TMB)
-setwd("C:/UAUCK/Conferences/ISEC_2018/TMBWorkshop/SpatialExample")
+library(inlabru)
+library(ggplot2)
 
 ## -- Simulate data -- ##
 
 #Simulate locations
 set.seed(888)
-Loc <- matrix(runif(200,0,100),ncol=2)
-plot(Loc)
+Loc <- data.frame(x = runif(100,0,100), 
+                  y = runif(100,0,100))
+p <- ggplot(Loc, aes(x=x, y=y)) + geom_point() +
+  theme_classic()
+p
 
 #Generate INLA mesh
-mesh <- inla.mesh.create(Loc)
-mesh <- inla.mesh.2d(loc=Loc, max.edge = 20, offset = 20)
-plot(mesh,asp=1);points(Loc, pch=16)
+mesh <- inla.mesh.create(as.matrix(Loc))
+mesh <- inla.mesh.2d(loc=as.matrix(Loc), max.edge = 20, offset = 20)
+p + gg(mesh)
 
 #Create SPDE object
 spde <- inla.spde2.matern(mesh)
 
 # Compile
-compile("spatial_spde.cpp" )
-dyn.load( dynlib("spatial_spde") )
+compile("docs/02-intermediate-tmb/lecture_code/spatial_spde.cpp" )
+dyn.load( dynlib("docs/02-intermediate-tmb/lecture_code/spatial_spde") )
 
 #Set true parameters
 Beta0 <- 1
@@ -42,7 +49,6 @@ simdata <- replicate(100, sim <- obj$simulate(obj$par))
 
 set.seed(123)
 simdata <- obj$simulate(obj$par)
-hist(simdata$Y_i, breaks = 30)
 
 ## -- Fit TMB model to estimate parameters -- ##
 #Set up TMB model
@@ -61,3 +67,11 @@ sdr
 report <- obj$report()
 plot(simdata$Y_i, exp(report$ln_mean))
 dyn.unload(dynlib("spatial_spde"))
+
+#Map estimated RE field
+omega.est <- obj$env$parList()$omega_v
+proj.grid <- expand.grid(x = 0:100, y = 0:100)
+P <- inla.mesh.project(mesh, as.matrix(proj.grid))
+proj.grid$z <- as.vector(P$A %*% omega.est)
+ggplot(proj.grid, aes(x=x, y=y, color = z)) + geom_point()
+

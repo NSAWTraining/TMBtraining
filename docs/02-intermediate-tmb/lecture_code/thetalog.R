@@ -1,14 +1,14 @@
 library(TMB)
 #use path from docs when running code
-#compile("docs/02-intermediate-tmb/lecture_code/thetalog.cpp")
-#dyn.load(dynlib("docs/02-intermediate-tmb/lecture_code/thetalog"))
+compile("docs/02-intermediate-tmb/lecture_code/thetalog.cpp")
+dyn.load(dynlib("docs/02-intermediate-tmb/lecture_code/thetalog"))
 #use path from 02-intermediate-tmb when generating Rmarkdown
-compile("lecture_code/thetalog.cpp")
-dyn.load(dynlib("lecture_code/thetalog"))
+#compile("lecture_code/thetalog.cpp")
+#dyn.load(dynlib("lecture_code/thetalog"))
 
 ## Read data
-#Y <- scan("docs/02-intermediate-tmb/lecture_code/thetalog.dat", skip=3, quiet=TRUE)
-Y <- scan("lecture_code/thetalog.dat", skip=3, quiet=TRUE)
+Y <- scan("docs/02-intermediate-tmb/lecture_code/thetalog.dat", skip=3, quiet=TRUE)
+#Y <- scan("lecture_code/thetalog.dat", skip=3, quiet=TRUE)
 data <- list(Y=Y)
 
 ## Parameter initial guess

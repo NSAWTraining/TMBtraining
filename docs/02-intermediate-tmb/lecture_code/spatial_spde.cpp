@@ -40,7 +40,7 @@ Type objective_function<Type>::operator() ()
   //Likelihood of observations
   vector<Type>lambda(n_i);
   //Derive abundance
-  Type Abundance;
+  Type Abundance = 0;
   for(int i=0; i<n_i; i++){
     lambda(i) = exp(beta0 + omega_v(v_i(i)));
     nll_comp(1) -= dpois(Y_i(i), lambda(i), true);

@@ -12,14 +12,12 @@ Type objective_function<Type>::operator() ()
   DATA_STRUCT(spde, spde_t); //INLA M0,M1,M2
 
   PARAMETER(beta0); //intercept
-  PARAMETER(ln_alpha); //gamma shape parameter
   PARAMETER(ln_kappa); 
   PARAMETER(ln_tau); 
 
   //Random Effects vector
   PARAMETER_VECTOR(omega_v);
 
-  Type alpha = exp(ln_alpha);
   Type kappa = exp(ln_kappa);
   Type tau = exp(ln_tau);
 
@@ -40,13 +38,16 @@ Type objective_function<Type>::operator() ()
   }
 
   //Likelihood of observations
-  vector<Type>ln_mean(n_i);
+  vector<Type>lambda(n_i);
+  //Derive abundance
+  Type Abundance;
   for(int i=0; i<n_i; i++){
-    ln_mean(i) = beta0 + omega_v(v_i(i));
-    nll_comp(1) -= dgamma(Y_i(i), alpha, exp(ln_mean(i))/alpha, true);
+    lambda(i) = exp(beta0 + omega_v(v_i(i)));
+    nll_comp(1) -= dpois(Y_i(i), lambda(i), true);
     SIMULATE{
-      Y_i(i) = rgamma(alpha, exp(ln_mean(i))/alpha);
+      Y_i(i) = rpois(lambda(i));
     }
+    Abundance += lambda(i);
   }
   
   Type nll = nll_comp.sum();
@@ -57,9 +58,12 @@ Type objective_function<Type>::operator() ()
     REPORT(Y_i);
   }
   
-  REPORT(ln_mean);
   REPORT(omega_v);
   REPORT(sig2);
+  REPORT(Abundance);
+  ADREPORT(Abundance);
+  REPORT(lambda);
+  ADREPORT(lambda);
 
   return nll;
 }

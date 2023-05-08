@@ -1,7 +1,7 @@
 library(TMB)
 
 #Debug using RStudio:
-TMB:::setupRStudio()
+#TMB:::setupRStudio()
 compile('docs/01-beginner-tmb/lecture_code/debug1.cpp')
 
 #TMB 1.8.0: disable Eigen warnings
@@ -19,17 +19,19 @@ beta <- c(0.5,2)
 X <- cbind(rep(1,50), 1:50)
 mu <- X%*%beta
 y = rnorm(50, mu, sig)
+dyn.load(dynlib("docs/01-beginner-tmb/lecture_code/linReg"))
 
+#Code will crash RStudio
+Data <- list(y = c(-2.1, 3.3, 4.2),
+             X = rbind(c(1,1),c(4,5))
+)
 
-# #Code will crash RStudio
-# Data <- list(y = c(-2.1, 3.3, 4.2),
-#              X = rbind(c(1,1),c(4,5))
-# )
-# 
-# Pars <- list(beta = 0)
-# obj <- MakeADFun(data = Data, 
-#                  parameters = Pars,  
-#                  DLL = "linReg")
+Pars <- list(beta = c(0,0), lnSigma = 0)
+str(Data)
+str(Pars)
+obj <- MakeADFun(data = Data,
+                 parameters = Pars,
+                 DLL = "linReg")
 
 #Debug using gdbsource
 #hangs on Windows
@@ -41,9 +43,9 @@ gdbsource("docs/01-beginner-tmb/lecture_code/debug_gdbsource.R",
 compile('docs/01-beginner-tmb/lecture_code/linReg.cpp')
 dyn.load(dynlib('docs/01-beginner-tmb/lecture_code/linReg'))
 Data <- list(y = c(-2.1, 3.3, 4.2),
-             X = data.frame(c(1,1,1),c(4,5,6))
+             X = cbind(c(1,1,1),c(4,5,6))
 )
-Pars <- list(beta = c(0,0))
+Pars <- list(beta = c(0,0), lnSigma = 0)
 obj <- MakeADFun(data = Data, 
                  parameters = Pars,  
                  DLL = "linReg")
@@ -55,9 +57,9 @@ dyn.unload(dynlib('docs/01-beginner-tmb/lecture_code/linReg'))
 
 compile("docs/01-beginner-tmb/lecture_code/debug2.cpp")
 dyn.load(dynlib("docs/01-beginner-tmb/lecture_code/debug2"))
-Data <- list(y = c(-2.1, 3.3, 4.2),
+Data <- list(y = c(2.1, 3.3, 4.2),
              X = cbind(c(1,1,1),c(4,5,2)))
-Pars <- list(beta = c(0,0), sigma = 0)
+Pars <- list(beta = c(0,0), lnSigma = 0)
 obj <- MakeADFun(data = Data, 
                  parameters = Pars, 
                  DLL = "debug2")
@@ -69,7 +71,7 @@ dyn.unload(dynlib("docs/01-beginner-tmb/lecture_code/debug2"))
 #----------------------------------------------------------------------
 # Convergence errors
 #----------------------------------------------------------------------
-
+library(TMB)
 compile("docs/01-beginner-tmb/lecture_code/debug3.cpp")
 dyn.load(dynlib("docs/01-beginner-tmb/lecture_code/debug3"))
 
@@ -83,7 +85,7 @@ y = rnorm(n, mu, sig)
 plot(X[,2], y)
 
 Data <- list(y = y, X = X)
-Pars <- list(beta = c(0,0), lnSigma = rep(0,n))
+Pars <- list(beta = c(0,0), lnSigma = 0)
 obj <- MakeADFun(data = Data, 
                  parameters = Pars, 
                  DLL = "debug3")

@@ -4,12 +4,14 @@ template <class Type>
   
 Type objective_function<Type>::operator()()
 {
-  DATA_VECTOR(y;
+  DATA_VECTOR(y);
   DATA_MATRIX(X);
   PARAMETER_VECTOR(beta);
   PARAMETER(lnSigma);
   
-  int nll = 0;
+  Type sigma = exp(lnSigma);
+  
+  Type nll = 0;
   int n = y.size();
   matrix<Type> mu = X * beta;
   

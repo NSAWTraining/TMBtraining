@@ -253,11 +253,11 @@ $$L(x) = \frac{det(\Sigma)^{-1/2}}{\sqrt{2\pi}^{n}}exp\big(x^{T}\Sigma^{-1}x\big
 <br>
 <br>
 $$Q = \Sigma^{-1} = \frac{1}{\sigma^{2}} \begin{bmatrix}
-1+\rho^{2}&-\rho&\cdot&\cdot&\cdot\\
+1&-\rho&\cdot&\cdot&\cdot\\
 -\rho&1+\rho^{2}&-\rho&\cdot&\cdot \\
 \cdot&\rho&1+\rho^{2}&-\rho&\cdot\\
 \cdot&\cdot&-\rho&1+\rho^{2}&-\rho \\
-\cdot&\cdot&\cdot&-\rho&1+\rho^{2}
+\cdot&\cdot&\cdot&-\rho&1
 \end{bmatrix}$$
 ]
 

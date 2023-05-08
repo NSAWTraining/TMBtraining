@@ -370,10 +370,24 @@ The graph is defined as forward computation is executed at every iteration
 .pull-left[
 **CppAD**
 - [CppAD package](https://coin-or.github.io/CppAD/doc/cppad.htm)
+- Developed and maintained by the CppAD community
+
+```{r, eval=FALSE}
+TMB::compile("mymodel.cpp")
+TMB::compile("mymodel.cpp", framework = "CppAD")
+```
+
 ]
 .pull-right[
 **TMBad**<br>
 - TMBad is available with TMB 1.8.0 and higher
+- Improved efficiencies over CppAD
+- Developed and maintained by Kasper Kristensen
+
+```{r, eval=FALSE}
+TMB::compile("mymodel.cpp", framework = "TMBad")
+```
+
 ]
 ---
 # R and C++ Type Systems

@@ -290,5 +290,27 @@ opt <- nlminb(obj$par, obj$fn, obj$gr)
 ]
 
 
+```{r, echo = FALSE}
+mat <- rbind(
+  c("FullGaussian", "Best approach when data and random effects are both normally distributed"),
+  c("oneStepGaussian", "Most efficient one-step method when data and random effects are approximately normal" ),
+  c("cdf", "One-step method that does not require normality but does require a closed form cdf"),
+  c("oneStepGeneric", "One-step method useful when no closed form cdf but slow")
+)
+df <- as.data.frame(mat)
+colnames(mat) <- c('Method', 'Definition')
+knitr::kable(as.data.frame(mat))
 
+```
 
+```{r, eval=FALSE}
+#TMB residual calculation for continuous data
+oneStepPredict(obj, observation.name = "y", method = "fullGaussian")
+
+oneStepPredict(obj, observation.name = "y", data.term.indicator = "keep",
+               method = "oneStepGaussian")
+
+#TMB residual calculation for discrete data
+oneStepPredict(obj, observation.name = "y", data.term.indicator = "keep",
+               method = "cdf", discrete = TRUE)
+```

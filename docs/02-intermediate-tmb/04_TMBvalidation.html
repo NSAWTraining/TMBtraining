@@ -623,12 +623,12 @@ opt &lt;- nlminb(obj$par, obj$fn, obj$gr)
 
 #TMB residual calculation for continuous data
 oneStepPredict(obj, observation.name = &quot;y&quot;,
-               data.term.indicator = &quot;keep&quot;
+               data.term.indicator = &quot;keep&quot;,
                method = &quot;oneStepGaussian&quot;)
 
 #TMB residual calculation for discrete data
 oneStepPredict(obj, observation.name = &quot;y&quot;,
-               data.term.indicator = &quot;keep&quot;
+               data.term.indicator = &quot;keep&quot;,
                method = &quot;cdf&quot;, discrete = TRUE)
 ```
 ]

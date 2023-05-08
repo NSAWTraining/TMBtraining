@@ -13,13 +13,19 @@
     <loc>https://nsawtraining/tmbtraining.github.io/01-beginner-tmb/exercises/codend-exercise.html</loc>
   </url>
   <url>
-    <loc>https://nsawtraining/tmbtraining.github.io/02-intermediate-tmb/AR1.html</loc>
+    <loc>https://nsawtraining/tmbtraining.github.io/02-intermediate-tmb/00_LVM.html</loc>
   </url>
   <url>
-    <loc>https://nsawtraining/tmbtraining.github.io/02-intermediate-tmb/LVM.html</loc>
+    <loc>https://nsawtraining/tmbtraining.github.io/02-intermediate-tmb/01_Sparse.html</loc>
   </url>
   <url>
-    <loc>https://nsawtraining/tmbtraining.github.io/02-intermediate-tmb/TMBvalidation.html</loc>
+    <loc>https://nsawtraining/tmbtraining.github.io/02-intermediate-tmb/03_Diagnostics.html</loc>
+  </url>
+  <url>
+    <loc>https://nsawtraining/tmbtraining.github.io/02-intermediate-tmb/04_TMBvalidation.html</loc>
+  </url>
+  <url>
+    <loc>https://nsawtraining/tmbtraining.github.io/02-intermediate-tmb/exercise/codend-exercise.html</loc>
   </url>
   <url>
     <loc>https://nsawtraining/tmbtraining.github.io/404.html</loc>

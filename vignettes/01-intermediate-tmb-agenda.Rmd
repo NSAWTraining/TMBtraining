@@ -33,11 +33,16 @@ Template Model Builder (TMB) is a statistical computing platform that performs m
 ### Slides
 
 
-- [Review of Latent Variable Models](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/LVM.html)
 
-- [Separability and Sparsity](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/AR1.html)
+- [Review of Latent Variable Models](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/00_LVM.html)
 
-- [Spatial Modeling](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/SpatialModels.pdf)
+- [Separability and Sparsity](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/01_Sparsity.html)
+
+- [Spatial Modeling](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/02_SpatialModels.pdf)
+
+- [Diagnostics](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/03_Diagnostics.pdf)
+
+- [Validation](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/04_TMBvalidation.html)
 
 ### Examples
 - [TMB Models and R scripts](https://github.com/NSAWTraining/TMBtraining/tree/main/docs/02-intermediate-tmb/lecture_code)

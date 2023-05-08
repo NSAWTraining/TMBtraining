@@ -46,12 +46,15 @@ navbar:
       icon: fas fa-file-contract fa-lg
       menu:
       - text: Review of Latent Variable Models
-        href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/LVM.html
+        href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/00_LVM.html
       - text: Separability and Sparsity
-        href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/AR1.html
+        href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/01_Sparsity.html
       - text: Spatial Modeling
-        href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/SpatialModels.pdf
-      
+        href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/02_SpatialModels.pdf
+      - text: Diagnostics
+        href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/03_Diagnostics.pdf
+      - text: Validation
+        href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/04_TMBvalidation.html
       
     documents:
       text: Resources

@@ -1,0 +1,35 @@
+---
+title: "Size Selectivity Exercise"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+<br>
+The dataset, [stownet](https://nsawtraining.github.io/TMBtraining/01-beginner-tmb/exercises/stownet.RData), contains length-frequency data from a size selectivity experiment on haddock from a fishing trawl. The dataset contains the length classes and counts of fish retained in the codend and the cover. The codend is the aft part of a trawl and the cover is a fine mesh placed around the codend to determine the number and length of fish able to swim through the codend and represent those released from the trawl. The data are for 19 replicate hauls. This exercise is described in detail in Millar, R.B. (2011), data are from Clark (1957). 
+
+A logistic regression model has been set up based on the following specification:
+<br><br>
+
+\begin{align}
+\eta_{i} &= \beta_{0} + \beta_{1}L_{i}\\
+&\\
+p_{i} &= \frac{1}{1+exp(-\eta)}\\
+&\\
+N &= Codend + Cover\\
+&\\
+Codend &\sim Binomial(N, p)
+\end{align}
+<br>
+
+1. Add the Haul ID to the model first as a fixed effect and then as a random effect. The number of random effects will be equal to the number of unique hauls.  
+
+2. Evaluate model diagnostics using examples from the [spatial spde](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/02-intermediate-tmb/lecture_code/spatial_spde.R) case study. Try calculating a likelihood ratio test comparing the fixed to random effect models. See [lr_test.R](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/lr_test.R) for an example of setting up a likelihood ratio test.
+
+
+<br>
+
+**References:**<br> 
+- Clark, J.R. 1957. Effect of length of haul on cod end escapement. ICNAF/ICES/FAO workshop on selectivity, Lisbon. Paper S25.<br>
+- Millar, R.B. 2011. Maximum likelihood estimation and inference: With examples in R, SAS, and ADMB. Wiley, Auckland, New Zealand. pg. 155-160.

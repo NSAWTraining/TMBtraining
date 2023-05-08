@@ -10,11 +10,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 - [Review of Latent Variable Models](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/00_LVM.html)
 
-- [Separability and Sparsity](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/01_Sparsity.html)
+- [Separability and Sparsity](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/01_Sparse.html)
 
 - [Spatial Modeling](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/02_SpatialModels.pdf)
 
-- [Diagnostics](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/03_Diagnostics.pdf)
+- [Diagnostics](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/03_Diagnostics.html)
 
 - [Validation](https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/04_TMBvalidation.html)
 

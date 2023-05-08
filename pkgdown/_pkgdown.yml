@@ -48,11 +48,11 @@ navbar:
       - text: Review of Latent Variable Models
         href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/00_LVM.html
       - text: Separability and Sparsity
-        href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/01_Sparsity.html
+        href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/01_Sparse.html
       - text: Spatial Modeling
         href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/02_SpatialModels.pdf
       - text: Diagnostics
-        href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/03_Diagnostics.pdf
+        href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/03_Diagnostics.html
       - text: Validation
         href: https://nsawtraining.github.io/TMBtraining/02-intermediate-tmb/04_TMBvalidation.html
       

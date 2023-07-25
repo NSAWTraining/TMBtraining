@@ -8,6 +8,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 ### Slides
 
+- [Into to TMB](https://nsawtraining.github.io/TMBtraining/01-beginner-tmb/00_01_a_TMB_Intro.html): Stand-alone introductory presentation 
+
 - [Statistical Computing Review](https://nsawtraining.github.io/TMBtraining/01-beginner-tmb/00_00_Statistical_Computing_Review.html#1)
 
 - [TMB Preliminaries](https://nsawtraining.github.io/TMBtraining/01-beginner-tmb/00_01_TMB_Preliminaries.html)

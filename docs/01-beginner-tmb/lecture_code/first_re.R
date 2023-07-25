@@ -61,3 +61,7 @@ summary(sdr, "fixed")
 summary(sdr, "random")
 sdr$pdHess
 
+as.list(sdr, "Estimate")$u
+as.list(sdr, "Std")$u
+
+

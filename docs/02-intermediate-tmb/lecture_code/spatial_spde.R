@@ -169,6 +169,8 @@ plot(prof);abline(v = log(Kappa))
 ci <- confint(prof)
 summary(sdr, "fixed")
 abline(v = ci[1]); abline(v = ci[2])
+
+abline(v = ci[1]); abline(v = ci[2])
 abline(v = log(Kappa), col = 'red')
 #dev.off()
 

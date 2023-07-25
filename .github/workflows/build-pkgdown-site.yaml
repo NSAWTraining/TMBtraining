@@ -9,11 +9,11 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
-      - uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-r@v2
       - uses: r-lib/actions/setup-pandoc@v1
 
       - name: Install packages
-        run: Rscript -e 'install.packages(c("pkgdown", "roxygen2", "knitr"))'
+        run: Rscript -e 'install.packages(c("pkgdown", "roxygen2", "knitr", "TMB"))'
 
       - name: Update R function documentation
         run: Rscript -e 'roxygen2::roxygenize()'

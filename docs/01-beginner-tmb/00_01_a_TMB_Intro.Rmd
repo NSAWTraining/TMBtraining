@@ -1,0 +1,745 @@
+---
+title:  "Intro to TMB"
+author: "Andrea Havron<br>NOAA Fisheries, OST"
+output:
+  xaringan::moon_reader:
+    self_contained: true
+    css: ["xaringan-themer.css", "slides-style.css"]
+    lib_dir: libs
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc( (%current% - 1) / (%total% - 1) * 100%);">
+          </div>
+        </div>`
+---
+layout: true
+
+.footnote[U.S. Department of Commerce | National Oceanic and Atmospheric Administration | National Marine Fisheries Service]
+
+
+<style type="text/css">
+
+code.cpp{
+  font-size: 14px;
+}
+code.r{
+  font-size: 14px;
+}
+
+
+</style>
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+```{r xaringan-tile-view, echo=FALSE}
+# this gives you a tile navigation if you type "O" at any time
+xaringanExtra::use_tile_view()
+```
+---
+# Template Model Builder
+<br><br>
+.large[.p[
+- R package available on CRAN
+- Implements automatic differentiation
+- Laplace Approximation
+- No. fixed effects $\approx 10^3$, No. random effects $\approx 10^6$
+- Automatically detects sparseness
+]]
+---
+# What is Automatic Differentiation?
+
+.pull-left-narrow[
+```{r, echo = FALSE, out.width="100%", fig.align="left"}
+knitr::include_graphics("static/comp-graph.png")
+```
+
+Computational Graph (Tape)
+]
+.pull-right[
+Program: 
+```{r, eval = FALSE}
+v1: x 
+v2: y 
+v3: a = x * y 
+v4: b = sin(y) 
+v5: z = a + b 
+```
+
+Reverse Mode:
+```{r, eval = FALSE}
+dz/dz = 1
+dz/db = d(a+b)/dz = 1
+dz/da = d(a+b)/dz = 1
+dz/dx = dz/da * da/dx + dz/db * db/dx
+      = 1 * d(x*y)/dx + d(sin(y))/dx
+      = y
+dz/dy = dz/da * da/dy + dz/db*db/dy
+      = 1 * d(x*y)/dy + d(sin(y))/dy
+      = x + cos(y)  
+
+```
+
+Gradients:
+```{r, eval = FALSE}
+[dz/dx, dz/dy] = [y, x + cos(y)]
+```
+
+
+]]
+
+
+---
+# Getting Started with TMB
+
+- A collection of instructions and tips available from [TMB Developer Resources](https://nsawtraining.github.io/TMBtraining/articles/00_00_TMB_Developer_Resources.html)
+
+1. Software requirements: 
+ - [R](https://posit.co/download/rstudio-desktop/)
+ - R IDE - any IDE that runs R will work. See below for suggestions:
+   - [RStudio](https://posit.co/download/rstudio-desktop/)   
+   - [VSCode](https://code.visualstudio.com/download) 
+ - [RTools](https://cran.r-project.org/bin/windows/Rtools/) 
+     - Windows users only
+     - Install the version that matches your R-version
+
+2. [Download and Install Instructions](https://github.com/kaskr/adcomp/wiki/Download)
+
+3. See [Code–snippets](https://github.com/kaskr/adcomp/wiki/Code--snippets) and [FAQ](https://github.com/kaskr/adcomp/wiki/FAQ) for useful tips and tricks
+
+Source: [https://nsawtraining.github.io/TMBtraining/articles/00_01_Getting_Started.html](https://nsawtraining.github.io/TMBtraining/articles/00_01_Getting_Started.html)
+---
+# TMB Model
+
+
+.pull-left[
+[**linReg.cpp**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/linReg.cpp)
+```cpp
+#include <TMB.hpp>
+template <class Type>
+  
+Type objective_function<Type>::operator()()
+{
+  DATA_VECTOR(y);
+  DATA_MATRIX(X);
+  PARAMETER_VECTOR(beta);
+  PARAMETER(lnSigma);
+  
+  Type nll = 0;
+  Type sigma = exp(lnSigma);
+  int n = y.size();
+  vector<Type> mu = X * beta;
+  for(int i=0; i<n; i++){
+    nll -= dnorm(y(i), mu(i), sigma, true);
+  }
+  SIMULATE{
+    y = rnorm(mu, sigma);
+    REPORT(y);
+  }
+  
+  Type sig2 = pow(sigma,2);
+  REPORT(sig2);
+  ADREPORT(sig2);
+  
+  return nll;
+}
+```
+]
+
+.pull-right[
+**C++ Syntax**
+* Lines end in semi-colons
+* Everything must be declared
+* Type is generic and assigned based on input
+* Indexing starts at $0$!
+* $x -= 1: x = x-1$
+* Matrix multiplication uses $*$
+* Math operators similar to R $(+ - /*)$ 
+* Use $pow(x,p)$ for $x^p$
+* if statements cannot be based on a parameter
+]
+
+
+
+---
+# Data: Importing data from R<br><br>
+* Pass data to TMB with these 'macros'
+* Note: do not specify the object dimension
+<br><br>
+```{r echo = FALSE, warning=FALSE,results = 'asis'}
+library(knitr)
+df <- as.data.frame(
+  rbind(
+    c('DATA_VECTOR(x)',	'tmbutils::vector<Type>',	'vector'),
+    c('DATA_MATRIX(x)','tmbutils::matrix<Type>',	'matrix'),
+    c('DATA_SCALAR(x)',	'Type',	'numeric(1)'),
+    c('DATA_INTEGER(x)',	'int',	'integer(1)'),
+    c('DATA_FACTOR(x)',	'Eigen::vector<int>',	'factor'),
+    c('DATA_ARRAY(x)'	,'tmbutils::array<Type>',	'array')
+  )
+)
+colnames(df) <- c('TMB Syntax' , 'C++ Type' , 'R Type')
+kable(df)
+```
+---
+# Data: Importing data from R<br><br>
+
+.pull-left-narrow[
+TMB code
+```cpp
+DATA_VECTOR(y); 
+DATA_MATRIX(X); 
+DATA_INTEGER(i); 
+DATA_FACTOR(ngroup);  
+
+```
+]
+
+.pull-right-wide[
+R script
+```{r}
+Data <- list(
+  y = c(30.2, 45.3, 12.1),
+  X = matrix(0,3,3),
+  i = 11,
+  ngroup = c(1,1,2,2,2)
+)
+str(Data)
+```
+]
+
+---
+# Declaring model parameters<br><br>
+* No PARAMETER_INTEGER
+* Again, do not specify the object dimension
+<br><br>
+```{r echo = FALSE, results = 'asis'}
+library(knitr)
+df <- as.data.frame(
+  rbind(
+    c('PARAMETER_VECTOR(x)',	'tmbutils::vector<Type>',	'vector'),
+    c('PARAMETER_MATRIX(x)','	tmbutils::matrix<Type>',	'matrix'),
+    c('PARAMETER_ARRAY(x)'	,'tmbutils::array<Type>',	'array'),
+    c('PARAMETER(x)'	,'Type',	'numeric(1)')
+  )
+)
+colnames(df) <- c('TMB Syntax' , 'C++ Type' , 'R Type')
+kable(df)
+```
+
+---
+# Declaring model parameters<br><br>
+
+.pull-left-narrow[
+TMB code
+```cpp
+PARAMETER_VECTOR(beta); 
+PARAMETER(lnSigma); 
+PARAMETER_MATRIX(u); 
+```
+]
+
+.pull-right-wide[
+R script
+```{r}
+Pars <- list(
+   beta = c(0,0),
+   lnSigma = 0,
+   u = matrix(0,3,3) 
+)
+
+str(Pars) 
+```
+]
+---
+# Calling a TMB model from R
+
+**Model Compilation**
+- All C++ models, including TMB, need to be compiled
+- In TMB, this creates a dynamic link library (.dll/.so)
+- The .dll/.so file needs to be loaded for R to access the model
+
+```{r, eval=FALSE, warning = FALSE}
+TMB::compile('linReg.cpp')
+dyn.load(TMB::dynlib('linReg'))
+```
+
+```{r, echo = FALSE, warning = FALSE}
+dyn.load(TMB::dynlib('lecture_code/linReg'))
+set.seed(123)
+sig <- 2
+beta <- c(0.5,2)
+X <- cbind(rep(1,50), 1:50)
+mu <- X%*%beta
+y = rnorm(50, mu, sig)
+
+Data <- list(y = y, 
+             X = X)
+Pars <- list(beta = c(0,0),lnSigma = 0)
+```
+
+**Computational graph**
+ - TMB has a static graph, so this step happens before optimization
+ - The R function, MakeADFun() completes this step
+```{r}
+obj <- TMB::MakeADFun(data = Data, parameters = Pars, DLL = 'linReg')
+```
+**Running Optimization**
+- The model is optimized outside of TMB using any R minimizer
+- `nlminb` is a base R minimizer frequently used for TMB models
+
+```{r, results = "hide"}
+opt <- stats::nlminb(obj$par, obj$fn, obj$gr)
+```
+---
+# Model convergence
+
+```{r}
+#Check maximum gradient < 0.0001
+obj$gr()
+#Check convergence error = 0
+opt$convergence
+#Check convergence message
+opt$message
+```
+---
+# Reporting Results
+
+.pull-left[
+C++
+```cpp
+  Type sig2 = pow(sigma,2);
+  REPORT(sig2);
+  ADREPORT(sig2);
+```
+]
+.pull-right[
+R
+```{r, eval = FALSE}
+report <- obj$report()
+sdr <- sdreport(sdr)
+summary(sdr, "fixed")
+summary(sdr, "report")
+```
+]
+---
+# Parameter mapping
+
+#### TMB allows users to collect and fix parameters using the map argument in MakeADFun()
+.p[
+* The parameter map is a list of parameters that are fixed or collected in a model run
+* Names and dimensions of parameters in the map list must match those of the parameter list
+* The map list is structured as a list of factors
+* Parameters with factor(NA) are fixed
+* Parameters with equal factor levels are collected to a common value
+]
+
+---
+# Parameter mapping example
+
+.pull-left[
+TMB example: [**lr_test.cpp**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/lr_test.cpp)<br>
+C++
+```cpp
+// Illustrate map feature of TMB to perform 
+//likelihood ratio tests on a ragged array dataset.
+
+#include <TMB.hpp>
+
+template<class Type>
+Type objective_function<Type>::operator() ()
+{
+  DATA_VECTOR(obs);
+  DATA_FACTOR(group);
+  
+  PARAMETER_VECTOR(mu);
+  PARAMETER_VECTOR(sd);
+  
+  Type res=0;
+  
+  for(int i=0;i<obs.size();i++){
+    res -= dnorm(obs[i],mu[group[i]],
+                 sd[group[i]],true);
+  }
+  
+  return res;
+}
+
+```]
+
+.pull-right[
+R
+```{r, echo = FALSE}
+dyn.load(TMB::dynlib("lecture_code/lr_test"))
+```
+
+```{r}
+# Simulate ragged array
+ngroup <- 5
+nrep <- c(5,8,11,13,2)  ## Number of samples per group
+mu <- rep(0,ngroup)     ## Mean value per group
+sd <- c(1,1,1,2,2)      ## Standard deviation per group
+
+set.seed(123)
+raggedArray <- lapply(1:ngroup,function(i)
+  rnorm(nrep[i],mu[i],sd[i]))
+
+## Prepare data for TMB (ragged array not available):
+obs <- unlist(raggedArray)
+group <- factor( rep(1:length(raggedArray),
+                     sapply(raggedArray,length)) )
+
+```
+]
+---
+# Parameter mapping example
+
+.pull-left[
+TMB example: [**lr_test.cpp**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/lr_test.cpp)<br>
+C++
+```cpp
+// Illustrate map feature of TMB to perform 
+//likelihood ratio tests on a ragged array dataset.
+
+#include <TMB.hpp>
+
+template<class Type>
+Type objective_function<Type>::operator() ()
+{
+  DATA_VECTOR(obs);
+  DATA_FACTOR(group);
+  
+  PARAMETER_VECTOR(mu);
+  PARAMETER_VECTOR(sd);
+  
+  Type res=0;
+  
+  for(int i=0;i<obs.size();i++){
+    res -= dnorm(obs[i],mu[group[i]],
+                 sd[group[i]],true);
+  }
+  
+  return res;
+}
+
+```]
+
+.pull-right[
+R
+```{r, fig.height=5, fig.width=5}
+plot(group, obs)
+```
+]
+---
+# Parameter mapping example
+
+.pull-left[
+TMB example: [**lr_test.cpp**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/lr_test.cpp)
+C++
+```cpp
+// Illustrate map feature of TMB to perform 
+//likelihood ratio tests on a ragged array dataset.
+
+#include <TMB.hpp>
+
+template<class Type>
+Type objective_function<Type>::operator() ()
+{
+  DATA_VECTOR(obs);
+  DATA_FACTOR(group);
+  
+  PARAMETER_VECTOR(mu);
+  PARAMETER_VECTOR(sd);
+  
+  Type res=0;
+  
+  for(int i=0;i<obs.size();i++){
+    res -= dnorm(obs[i],mu[group[i]],
+                 sd[group[i]],true);
+  }
+  
+  return res;
+}
+
+```]
+
+.pull-right[
+R
+```{r}
+## Data list
+Dat <- list(obs=obs,group=group)
+## Parameter list
+Pars <- list(mu=rep(0,ngroup),sd=rep(1,ngroup))
+
+## Both mu and sd un-restricted.
+full.model <- TMB::MakeADFun(data=Dat, parameters=Pars,
+                             DLL="lr_test")
+full.model$par
+## Restrict my to be equal
+map <- list(mu=factor(c(1,1,1,1,1)))
+restricted.model <- TMB::MakeADFun(data=Dat,parameters=Pars,
+                               DLL="lr_test", map=map)
+restricted.model$par
+
+```
+]
+
+---
+# Parameter mapping example
+
+.pull-left[
+TMB example: [**lr_test.cpp**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/lr_test.cpp)
+C++
+```cpp
+// Illustrate map feature of TMB to perform 
+//likelihood ratio tests on a ragged array dataset.
+
+#include <TMB.hpp>
+
+template<class Type>
+Type objective_function<Type>::operator() ()
+{
+  DATA_VECTOR(obs);
+  DATA_FACTOR(group);
+  
+  PARAMETER_VECTOR(mu);
+  PARAMETER_VECTOR(sd);
+  
+  Type res=0;
+  
+  for(int i=0;i<obs.size();i++){
+    res -= dnorm(obs[i],mu[group[i]],
+                 sd[group[i]],true);
+  }
+  
+  return res;
+}
+
+```]
+
+.pull-right[
+R
+```{r}
+## Data list
+Dat <- list(obs=obs,group=group)
+## Parameter list
+Pars <- list(mu=rep(0,ngroup),sd=rep(1,ngroup))
+
+## Both mu and sd un-restricted.
+full.model <- TMB::MakeADFun(data=Dat,parameters=Pars,
+                        DLL="lr_test")
+full.model$par
+## Fix mu at 0 and restrict sd to be equal
+map <- list(mu=factor(c(NA,NA,NA,NA,NA)), 
+            sd=factor(c(1,1,1,1,1)) )
+restricted.model <- TMB::MakeADFun(data=Dat,parameters=Pars,
+                               DLL="lr_test", map=map)
+restricted.model$par
+```
+]
+---
+# Simulation in TMB
+
+<br>
+- TMB includes internal functions for generating data
+- Simulations use R's random number generator and can be controlled with R's `set.seed()` function
+- Simulation blocks can be used to specify code only run when simulations are called from R
+- Best practice to include simulation code directly after likelihood calls
+
+
+Standard generator functions to simulate data within the TMB model:
+```cpp
+rnorm()           rpois()           runif()
+rbinom()          rgamma()          rexp()          
+rbeta()           rf()              rlogis()  
+rt()              rweibull()        rcompois()
+rtweedie()        rnbinom()         rnbinom2()
+```
+
+Simulators for multivariate TMB functions:
+```cpp
+MVNORM(Sigma).simulate()
+GMRF(Q).simulate(x)
+AR1(phi).simulate(x)
+```
+---
+# Simulation example
+
+.pull-left[
+**Linear Regression Example**:  [**linReg.cpp**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/linReg.cpp)
+C++
+```cpp
+ for(int i=0; i<n; i++){
+    nll -= dnorm(y(i), mu(i), sigma, true);
+  }
+  SIMULATE{
+    y = rnorm(mu, sigma);
+    REPORT(y);
+  }
+```
+<br><br>
+*Note:*<br>
+*optimization not necessary for simulation*
+]
+
+.pull-right[
+```{r, echo=FALSE, warning=FALSE}
+library(TMB)
+dyn.load(dynlib('lecture_code/linReg'))
+```
+R code
+```{r, fig.height=4,fig.width=4}
+sig <- 2
+beta <- c(0.5,2)
+
+Data <- list(y = rep(0,100), 
+             X =  cbind(rep(1,100), 1:100))
+Pars <- list(beta = c(0.5,2),lnSigma = log(4))
+obj <- MakeADFun(data = Data, 
+                 parameters = Pars, 
+                 DLL = 'linReg')
+set.seed(1) ## optional
+ysim <- obj$simulate()$y
+plot(Data$X[,2],ysim,ylab="",xlab="")
+```
+]
+---
+# Simulation Study
+
+.pull-left[
+**Linear Regression Example**:  [**linReg.cpp**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/01-beginner-tmb/lecture_code/linReg.cpp)
+C++
+```cpp
+ for(int i=0; i<n; i++){
+    nll -= dnorm(y(i), mu(i), sigma, true);
+  }
+  SIMULATE{
+    y = rnorm(mu, sigma);
+    REPORT(y);
+  }
+```
+<br><br>
+*Simulation can be used to self-test model*
+]
+
+.pull-right[
+```{r, echo=FALSE, warning=FALSE}
+library(TMB)
+dyn.load(dynlib('lecture_code/linReg'))
+```
+R code
+```{r, fig.height=4,fig.width=4}
+sig <- 2
+beta <- c(0.5,2)
+
+Data <- list(y = rep(0,100), 
+             X =  cbind(rep(1,100), 1:100))
+Pars <- list(beta = c(0.5,2),lnSigma = log(4))
+obj <- MakeADFun(data = Data, 
+                 parameters = Pars, 
+                 DLL = 'linReg')
+sim <- replicate(500, {
+  simdata <- obj$simulate(par=obj$par, complete=TRUE)
+  obj2 <- MakeADFun(simdata, Pars, 
+                    DLL="linReg", silent=TRUE)
+  nlminb(obj2$par, obj2$fn, obj2$gr)$par
+})
+obj$par
+apply(t(sim), 2, mean)
+```
+]
+---
+#Random Effects Models<br><br>
+
+### The Hierarchical Model:<br>
+
+$$\Large \int_{\mathbb{R}}f(y;u,\theta)f(u;\theta)du$$
+---
+# The Laplace approximation<br>
+
+Changes the problem from integration to optimization <br>
+.pull-left[
+$$L(\theta) = \int_{\mathbb{R}}f(y;u,\theta)f(u;\theta)du$$<br><br>
+$$L^{*}(\theta) = \sqrt{2\pi}^{n}det(\mathbb{H})^{-1/2}f(y,\hat{u}, \theta)$$
+]
+.pull-right[
+```{r, echo = FALSE, out.width="100%", fig.align="left"}
+knitr::include_graphics("static/laplace-accuracy.png")
+```
+<br>
+Figure from [Albertsen, C. M. (2018), 2.3.1](https://backend.orbit.dtu.dk/ws/portalfiles/portal/157133664/Publishers_version.pdf)
+]
+---
+# Random Effect Example
+
+.pull-left[
+C++:
+[**randomwalk.cpp**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/02-beginner-tmb/lecture_code/randomwalk.cpp)
+```cpp
+#include <TMB.hpp>
+
+template <class Type>
+Type objective_function<Type>::operator()()
+{
+  DATA_VECTOR(y); // Observations
+
+  PARAMETER_VECTOR(u);
+  PARAMETER(mu);
+  PARAMETER(ln_sig);
+  PARAMETER(ln_tau);
+
+  Type sig=exp(ln_sig);	// observation sd
+  Type tau=exp(ln_tau);		// process sd
+  // Initial condition
+  Type nll = -dnorm(u(0), Type(0), Type(1000), true);
+
+  for (int i = 1; i < u.size(); ++i){
+    nll -= dnorm(u(i), u(i - 1) + mu, tau, true);
+  }
+
+  // Observations
+  for (int i = 0; i < y.size(); ++i){
+    nll -= dnorm(y(i), u(i), sig, true);
+  }
+  
+  return nll;
+```
+]
+
+.pull-right[
+R:
+[**randomwalk.R**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/02-beginner-tmb/lecture_code/randomwalk.R)
+```{r, eval = FALSE}
+library(TMB)
+N <- 100
+mu <- 2
+sd.proc <- sd.obs <- 1
+
+# simulate random measurements and data 
+set.seed(123)
+u <- c(0,cumsum(rnorm(N-1,mean=mu,sd=sd.proc)))
+y <- u + rnorm(N,sd=sd.obs)
+
+
+# setup TMB model 
+compile('randomwalk.cpp')
+dyn.load(dynlib('randomwalk'))
+
+Dat <- list(y = y)
+Pars <- list( u = rep(1, N), mu = 0, 
+              ln_sig = 0, ln_tau = 0)
+
+# Fit model
+obj <- TMB::MakeADFun( data=Dat, parameters=Pars, 
+                       random="u", DLL="randomwalk" )
+opt <- nlminb(obj$par, obj$fn, obj$gr)
+```
+]
+

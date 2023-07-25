@@ -319,12 +319,17 @@ C++
   REPORT(sig2);
   ADREPORT(sig2);
 ```
+R
+```{r, results="hide"}
+report <- obj$report()
+sdr <- TMB::sdreport(obj)
+```
 ]
 .pull-right[
 R
-```{r, eval = FALSE}
-report <- obj$report()
-sdr <- sdreport(sdr)
+```{r}
+#True parameters
+beta;sig
 summary(sdr, "fixed")
 summary(sdr, "report")
 ```
@@ -586,7 +591,7 @@ C++
 ```
 <br><br>
 *Note:*<br>
-*optimization not necessary for simulation*
+*Optimization not necessary for simulation*
 ]
 
 .pull-right[
@@ -595,19 +600,20 @@ library(TMB)
 dyn.load(dynlib('lecture_code/linReg'))
 ```
 R code
-```{r, fig.height=4,fig.width=4}
+```{r}
 sig <- 2
 beta <- c(0.5,2)
 
 Data <- list(y = rep(0,100), 
              X =  cbind(rep(1,100), 1:100))
 Pars <- list(beta = c(0.5,2),lnSigma = log(4))
-obj <- MakeADFun(data = Data, 
-                 parameters = Pars, 
+obj <- MakeADFun(data = Data, parameters = Pars, 
                  DLL = 'linReg')
 set.seed(1) ## optional
 ysim <- obj$simulate()$y
-plot(Data$X[,2],ysim,ylab="",xlab="")
+```
+```{r, echo = FALSE, fig.height=4,fig.width=4}
+plot(Data$X[,2],ysim,ylab="y",xlab="X")
 ```
 ]
 ---
@@ -717,7 +723,6 @@ Type objective_function<Type>::operator()()
 R:
 [**randomwalk.R**](https://github.com/NSAWTraining/TMBtraining/blob/main/docs/02-beginner-tmb/lecture_code/randomwalk.R)
 ```{r, eval = FALSE}
-library(TMB)
 N <- 100
 mu <- 2
 sd.proc <- sd.obs <- 1
@@ -729,8 +734,8 @@ y <- u + rnorm(N,sd=sd.obs)
 
 
 # setup TMB model 
-compile('randomwalk.cpp')
-dyn.load(dynlib('randomwalk'))
+TMB::compile('randomwalk.cpp')
+dyn.load(TMB::dynlib('randomwalk'))
 
 Dat <- list(y = y)
 Pars <- list( u = rep(1, N), mu = 0, 
@@ -743,3 +748,47 @@ opt <- nlminb(obj$par, obj$fn, obj$gr)
 ```
 ]
 
+---
+# Random Effect Model Output
+```{r, echo = FALSE, results = "hide", warning = FALSE}
+N <- 100
+mu <- 2
+sd.proc <- sd.obs <- 1
+
+# simulate random measurements and data 
+set.seed(123)
+u <- c(0,cumsum(rnorm(N-1,mean=mu,sd=sd.proc)))
+y <- u + rnorm(N,sd=sd.obs)
+
+
+# setup TMB model 
+compile('../02-intermediate-tmb/lecture_code/randomwalk.cpp')
+dyn.load(dynlib('../02-intermediate-tmb/lecture_code/randomwalk'))
+
+Dat <- list(y = y, sim_re = 0)
+Pars <- list( u = rep(1, N), mu = 0, 
+              ln_sig = 0, ln_tau = 0
+            )
+# Fit model
+obj <- TMB::MakeADFun( data=Dat, parameters=Pars, 
+                       random="u", DLL="randomwalk" )
+opt <- nlminb(obj$par, obj$fn, obj$gr)
+```
+
+**Report out results**
+.pull-left[
+```{r, results = "hide"}
+sdr <- TMB::sdreport(obj)
+```
+
+```{r}
+summary(sdr,"fixed")
+```
+]
+
+.pull-right[
+```{r, fig.height = 4, fig.width=4}
+est.u <- as.list(sdr, "Estimate")$u
+plot(est.u, y, xlab = "Expected", ylab = "Observed")
+```
+]

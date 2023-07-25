@@ -1,11 +1,10 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# NSAW TMB Training Workshops May 8th
+# A Repository of TMB Training Materials
 
-## Before the workshop
+## TMB first steps
 
-Please make sure you have R, TMB, and an R IDE installed. Please see
-[Getting Started with
+See [Getting Started with
 TMB](https://nsawtraining.github.io/TMBtraining/articles/00_01_Getting_Started.html)
 for software requirements and TMB package installation instructions. The
 [TMB Developer
@@ -19,21 +18,20 @@ date)](https://img.shields.io/github/v/release/nmfs-fish-tools/pkgdownTemplate)]
 [![R-CMD-check](https://github.com/nmfs-fish-tools/pkgdownTemplate/workflows/R-CMD-check/badge.svg)](https://github.com/nmfs-fish-tools/pkgdownTemplate/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-## NSAW Agendas
+## Previous Training Agendas
 
-[Beginner
-TMB](https://nsawtraining.github.io/TMBtraining/articles/00-beginner-tmb-agenda.html)
-(9:00am - 12:30pm)<br> [Intermediate
+[NSAW 2023 - Beginner
+TMB](https://nsawtraining.github.io/TMBtraining/articles/00-beginner-tmb-agenda.html)<br>
+[NSAW 2023 - Intermediate
 TMB](https://nsawtraining.github.io/TMBtraining/articles/01-intermediate-tmb-agenda.html)
-(2:00pm - 5:30pm)
 
 ## Training Materials are found under the `docs` directory
 
 | Folder                                                                                                     | Description                                                       |
 |------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
 | [TMB Resources](https://nsawtraining.github.io/TMBtraining/articles/000_Getting_Started_Contents.html)     | Links with helpful tips and resources on getting started with TMB |
-| [Beginner TMB](https://nsawtraining.github.io/TMBtraining/articles/001_Beginner_TMB_Contents.html)         | Materials for NSAW Beginner TMB Course                            |
-| [Intermediate TMB](https://nsawtraining.github.io/TMBtraining/articles/002_Intermediate_TMB_Contents.html) | Materials for NSAW Intermediate TMB Course                        |
+| [Beginner TMB](https://nsawtraining.github.io/TMBtraining/articles/001_Beginner_TMB_Contents.html)         | Materials for Beginners                                           |
+| [Intermediate TMB](https://nsawtraining.github.io/TMBtraining/articles/002_Intermediate_TMB_Contents.html) | Materials for Intermediate to Advanced users                      |
 
 ## Download materials
 
@@ -52,9 +50,9 @@ devtools::install_github("NSAWTraining/TMBtraining")
 ## Disclaimer
 
 The United States Department of Commerce (DOC) GitHub project code is
-provided on an â€˜as isâ€™ basis and the user assumes responsibility for
-its use. DOC has relinquished control of the information and no longer
-has responsibility to protect the integrity, confidentiality, or
+provided on an ‘as is’ basis and the user assumes responsibility for its
+use. DOC has relinquished control of the information and no longer has
+responsibility to protect the integrity, confidentiality, or
 availability of the information. Any claims against the Department of
 Commerce stemming from the use of its GitHub project will be governed by
 all applicable Federal law. Any reference to specific commercial
@@ -63,7 +61,7 @@ manufacturer, or otherwise, does not constitute or imply their
 endorsement, recommendation or favoring by the Department of Commerce.
 The Department of Commerce seal and logo, or the seal and logo of a DOC
 bureau, shall not be used in any manner to imply endorsement of any
-commercial product or activity by DOC or the United States Government.â€
+commercial product or activity by DOC or the United States Government.”
 
 ------------------------------------------------------------------------
 

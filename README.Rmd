@@ -6,10 +6,10 @@ output:
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# NSAW TMB Training Workshops May 8th
+# A Repository of TMB Training Materials
 
-## Before the workshop 
-Please make sure you have R, TMB, and an R IDE installed. Please see [Getting Started with TMB](https://nsawtraining.github.io/TMBtraining/articles/00_01_Getting_Started.html) for software requirements and TMB package installation instructions. The [TMB Developer Resources](https://nsawtraining.github.io/TMBtraining/articles/00_00_TMB_Developer_Resources.html) provide a collection of useful resources from the TMB developers. 
+## TMB first steps
+See [Getting Started with TMB](https://nsawtraining.github.io/TMBtraining/articles/00_01_Getting_Started.html) for software requirements and TMB package installation instructions. The [TMB Developer Resources](https://nsawtraining.github.io/TMBtraining/articles/00_00_TMB_Developer_Resources.html) provide a collection of useful resources from the TMB developers. 
 
 <!-- badges: start -->
 
@@ -19,17 +19,17 @@ date)](https://img.shields.io/github/v/release/nmfs-fish-tools/pkgdownTemplate)]
 <!-- badges: end -->
 
 
-## NSAW Agendas
-[Beginner TMB](https://nsawtraining.github.io/TMBtraining/articles/00-beginner-tmb-agenda.html) (9:00am - 12:30pm)<br>
-[Intermediate TMB](https://nsawtraining.github.io/TMBtraining/articles/01-intermediate-tmb-agenda.html) (2:00pm - 5:30pm)
+## Previous Training Agendas
+[NSAW 2023 - Beginner TMB](https://nsawtraining.github.io/TMBtraining/articles/00-beginner-tmb-agenda.html)<br>
+[NSAW 2023 - Intermediate TMB](https://nsawtraining.github.io/TMBtraining/articles/01-intermediate-tmb-agenda.html)
 
 
 ## Training Materials are found under the `docs` directory
 | Folder | Description |
 | -------|-------------|                                      
 |[TMB Resources](https://nsawtraining.github.io/TMBtraining/articles/000_Getting_Started_Contents.html) | Links with helpful tips and resources on getting started with TMB |
-|[Beginner TMB](https://nsawtraining.github.io/TMBtraining/articles/001_Beginner_TMB_Contents.html)|Materials for NSAW Beginner TMB Course|
-|[Intermediate TMB](https://nsawtraining.github.io/TMBtraining/articles/002_Intermediate_TMB_Contents.html)|Materials for NSAW Intermediate TMB Course|
+|[Beginner TMB](https://nsawtraining.github.io/TMBtraining/articles/001_Beginner_TMB_Contents.html)|Materials for Beginners|
+|[Intermediate TMB](https://nsawtraining.github.io/TMBtraining/articles/002_Intermediate_TMB_Contents.html)|Materials for Intermediate to Advanced users|
 
 ## Download materials
 
